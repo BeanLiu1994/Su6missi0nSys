@@ -35,16 +35,24 @@ public:
     bool AdminLogin();
 public slots:
     void TeacherQuery();
-    void CourseQuery();
-    void StudentQuery();
     void TeacherAdd();
-    void CourseAdd();
+    void StudentQuery();
     void StudentAdd();
+    void CourseQuery();
+    void CourseQueryTid(string &tid);
+    void CourseAdd();
+    void CourseStudentQuery();
+    void CourseStudentQuerySid(string &sid);
+    void CourseStudentQueryCid(string &cid);
+    void CourseStudentAdd();
 private slots:
     void TeacherDoubleClicked(QTableWidgetItem *item);
     void StudentDoubleClicked(QTableWidgetItem *item);
     void CourseDoubleClicked(QTableWidgetItem *item);
+    void CourseStudentDoubleClicked(QTableWidgetItem *item);
     void TeacherIdSelected(QTableWidgetItem* item);
+    void StudentIdSelected(QTableWidgetItem *item);
+    void CourseIdSelected(QTableWidgetItem *item);
 private:
 
     Ui::MainWindow *ui;

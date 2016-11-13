@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>762</width>
-    <height>585</height>
+    <width>828</width>
+    <height>629</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>管理员界面</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
@@ -124,72 +124,134 @@
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
       <item>
-       <widget class="QLabel" name="label3">
-        <property name="text">
-         <string>course</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QLineEdit" name="course_id_input">
-          <property name="placeholderText">
-           <string>Id</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="course_name_input">
-          <property name="placeholderText">
-           <string>Name</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="course_tid_input">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="placeholderText">
-           <string>TeacherId</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="course_add">
+         <widget class="QLabel" name="label3">
           <property name="text">
-           <string>+</string>
+           <string>course</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLineEdit" name="course_id_input">
+            <property name="placeholderText">
+             <string>Id</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="course_name_input">
+            <property name="placeholderText">
+             <string>Name</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="course_tid_input">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="placeholderText">
+             <string>TeacherId</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="course_add">
+            <property name="text">
+             <string>+</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="course_table">
+          <property name="columnCount">
+           <number>3</number>
+          </property>
+          <column/>
+          <column/>
+          <column/>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="CourseRefresh">
+          <property name="text">
+           <string>RefreshCourse</string>
           </property>
          </widget>
         </item>
        </layout>
       </item>
       <item>
-       <widget class="QTableWidget" name="course_table">
-        <property name="columnCount">
-         <number>3</number>
-        </property>
-        <column/>
-        <column/>
-        <column/>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="CourseRefresh">
-        <property name="text">
-         <string>RefreshCourse</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLabel" name="label4">
+          <property name="text">
+           <string>Course_Student</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLineEdit" name="course_student_sid_input">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="placeholderText">
+             <string>StudentId</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="course_student_cid_input">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="placeholderText">
+             <string>CourseId</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="course_student_add">
+            <property name="text">
+             <string>+</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="course_student_table">
+          <property name="columnCount">
+           <number>2</number>
+          </property>
+          <column/>
+          <column/>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="CourseStudentRefresh">
+          <property name="text">
+           <string>RefreshCourseStudent</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>默认添加的密码为&quot;123456&quot;  双击删除,如果不能删除说明外键限制不满足</string>
+       <string>默认添加的密码为&quot;123456&quot;  双击删除,如果不能删除说明外键限制不满足  表格中的项选择后可以进行筛选  表格中的项选择后可以进行自动填充</string>
       </property>
      </widget>
     </item>
@@ -200,7 +262,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>762</width>
+     <width>828</width>
      <height>23</height>
     </rect>
    </property>

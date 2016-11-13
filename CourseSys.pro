@@ -34,6 +34,7 @@ HEADERS  += mainwindow.h \
     entity/Teacher.h \
     entity/Upload.h \
     entity/Work.h \
-    utils/DBUtil.h
+    utils/DBUtil.h \
+    propertymaker.h
 
 FORMS    += mainwindow.ui

@@ -5,6 +5,7 @@
  */
 #include "CourseStuDao.h"
 #include "CourseDao.h"
+#include "StudentDao.h"
 DBUtil* CourseStuDao::dBUtil=DBUtil::getInstance();
 ::_RecordsetPtr CourseStuDao::pRecordset=NULL;
 bool CourseStuDao::insertRecord( const string& cid,const string& sid,string tableName)
@@ -38,6 +39,40 @@ vector<Course> CourseStuDao::findCourseBySid(const string& sid,string tableName)
 		
 		string cid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("cid"));
 		Course c=CourseDao::findCourseByCid(cid);
+		v.push_back(c);
+		pRecordset->MoveNext();
+	}
+	return v;
+}
+vector<Student> CourseStuDao::findStudentByCid(const Course& s,string tableName){
+	vector<Student> v=findStudentByCid(s.getId());
+	return v;
+}
+vector<Student> CourseStuDao::findStudentByCid(const string& cid,string tableName){
+	string sql="select * from "+tableName+" where cid='"+cid+"';";
+	pRecordset=dBUtil->getRecordSet(sql.c_str());
+	vector<Student> v;
+	while(!pRecordset->adoEOF)
+	{
+		string sid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("sid"));
+		Student s=StudentDao::findStudentBySid(sid);
+		v.push_back(s);
+		pRecordset->MoveNext();
+	}
+	return v;
+}
+vector<CourseStu> CourseStuDao::findAllCourseStus(string tableName)
+{
+	string sql="select * from "+tableName+";";
+	pRecordset=dBUtil->getRecordSet(sql.c_str());
+	vector<CourseStu> v;
+	while(!pRecordset->adoEOF)
+	{
+		string cid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("cid"));
+		string sid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("sid"));
+		CourseStu c;
+		c.setsid(sid);
+		c.setcid(cid);
 		v.push_back(c);
 		pRecordset->MoveNext();
 	}
