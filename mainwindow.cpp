@@ -24,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->course_add, SIGNAL (released()),this, SLOT (CourseAdd()));
 
     connect(ui->teacher_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(TeacherDoubleClicked(QTableWidgetItem*)));
+    connect(ui->student_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(StudentDoubleClicked(QTableWidgetItem*)));
+    connect(ui->course_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(CourseDoubleClicked(QTableWidgetItem*)));
 }
 void MainWindow::TeacherDoubleClicked(QTableWidgetItem *item)
 {
@@ -33,15 +35,15 @@ void MainWindow::TeacherDoubleClicked(QTableWidgetItem *item)
 }
 void MainWindow::StudentDoubleClicked(QTableWidgetItem *item)
 {
-    string id = ui->teacher_table->item(item->row(),1)->text().toLocal8Bit().toStdString();
+    string id = ui->student_table->item(item->row(),1)->text().toLocal8Bit().toStdString();
     StudentDao::deleteRecord(id);
-    TeacherQuery();
+    StudentQuery();
 }
 void MainWindow::CourseDoubleClicked(QTableWidgetItem *item)
 {
     string id = ui->course_table->item(item->row(),1)->text().toLocal8Bit().toStdString();
     CourseDao::deleteRecord(id);
-    TeacherQuery();
+    CourseQuery();
 }
 MainWindow::~MainWindow()
 {

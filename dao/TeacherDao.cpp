@@ -53,7 +53,7 @@ Teacher TeacherDao::findTeacherByTid(const string& tid,string tableName){
 }
 
 bool TeacherDao::deleteRecord(const string& tid,string tableName){
-	string sql="delete from "+tableName+" where tid='"+tid+"';";
+    string sql="delete from "+tableName+" where tid='"+tid+"';";
     pRecordset=dBUtil->getRecordSet(sql.c_str());
 	return true;
 }

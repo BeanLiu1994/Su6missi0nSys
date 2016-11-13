@@ -58,6 +58,7 @@ _RecordsetPtr & DBUtil::getRecordSet(_bstr_t bstrSQL)
 {
  try
  {
+  cout<<bstrSQL<<endl;
   //连接数据库，如果connection对象为空，则重新连接数据库
   if(m_pConnection==NULL)
    initDBUtil();
