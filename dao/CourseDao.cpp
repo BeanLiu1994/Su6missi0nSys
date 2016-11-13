@@ -33,6 +33,18 @@ vector<Course> CourseDao::findCourseByTid(const string& tid,string tableName){
 	}
 	return v;
 }
+bool CourseDao::updateName(Course& s,string NewName, string tableName)
+{
+	s.setName(NewName);
+	string sql="update "+tableName+" set cname='"+NewName+"' where cid='"+s.getId()+"';";
+	return dBUtil->executeSQL(sql.c_str());
+}
+bool CourseDao::updateTid(Course& s,string Tid, string tableName)
+{
+	s.setTeacherId(Tid);
+	string sql="update "+tableName+" set tid='"+Tid+"' where cid='"+s.getId()+"';";
+	return dBUtil->executeSQL(sql.c_str());
+}
 Course CourseDao::findCourseByCid(const string& cid,string tableName){
 	string sql="select * from "+tableName+" where cid='"+cid+"';";
 	pRecordset=dBUtil->getRecordSet(sql.c_str());
@@ -50,4 +62,23 @@ Course CourseDao::findCourseByCid(const string& cid,string tableName){
 
 	}
 	return c;
+}
+vector<Course> CourseDao::findAllCourses(string tableName){
+    string sql="select cname,cid,tid from "+tableName;
+    pRecordset=dBUtil->getRecordSet(sql.c_str());
+    vector<Course> ss;
+    while(!(pRecordset->adoEOF))
+    {
+        Course c;
+        string cname=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("cname"));
+        string cid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("cid"));
+		string tid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("tid"));
+        c.setId(cid);
+        c.setName(cname);
+		c.setTeacherId(tid);
+        ss.push_back(c);
+        //printf("%s,%s added \n",cid.c_str(),cname.c_str());
+        pRecordset->MoveNext();
+    }
+    return ss;
 }

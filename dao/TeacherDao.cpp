@@ -18,6 +18,12 @@ bool TeacherDao::updatePassword(Teacher& s,string newPassword,string tableName)
 	string sql="update "+tableName+" set tpassword='"+newPassword+"' where tid='"+s.getId()+"';";
 	return dBUtil->executeSQL(sql.c_str());
 }
+bool TeacherDao::updateName(Teacher& s,string newName,string tableName)
+{
+	s.setName(newName);
+	string sql="update "+tableName+" set tname='"+newName+"' where tid='"+s.getId()+"';";
+	return dBUtil->executeSQL(sql.c_str());
+}
 bool TeacherDao::find(const string id,const string password,string tableName)
 {
 	string sql="select * from "+tableName+" where tid='"+id+"' and tpassword='"+password+"';";
@@ -46,11 +52,17 @@ Teacher TeacherDao::findTeacherByTid(const string& tid,string tableName){
 	return t;
 }
 
+bool TeacherDao::deleteRecord(const string& tid,string tableName){
+	string sql="delete from "+tableName+" where tid='"+tid+"';";
+	pRecordset=dBUtil->getRecordSet(sql.c_str());
+	return true;
+}
+
 vector<Teacher> TeacherDao::findAllTeachers(string tableName){
     string sql="select tname,tid from "+tableName;
     pRecordset=dBUtil->getRecordSet(sql.c_str());
     vector<Teacher> ts;
-    if(!(pRecordset->adoEOF))
+    while(!(pRecordset->adoEOF))
     {
         Teacher t;
         string tname=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("tname"));
@@ -58,7 +70,8 @@ vector<Teacher> TeacherDao::findAllTeachers(string tableName){
         t.setId(tid);
         t.setName(tname);
         ts.push_back(t);
-        printf("%s,%s added \n",tid.c_str(),tname.c_str());
+        //printf("%s,%s added \n",tid.c_str(),tname.c_str());
+        pRecordset->MoveNext();
     }
     return ts;
 }

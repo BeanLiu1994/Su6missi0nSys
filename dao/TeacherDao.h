@@ -22,8 +22,12 @@ private:
 public:
 	//插入一条老师的记录
 	static bool insertRecord(const Teacher& s,string tableName=TEA_TABLE_NAME);
+	//修改老师的姓名
+	static bool updateName(Teacher& s,string newName,string tableName=TEA_TABLE_NAME);
 	//修改老师的密码
 	static bool updatePassword(Teacher& s,string newPassword,string tableName=TEA_TABLE_NAME);
+	//删除老师
+	static bool deleteRecord(const string& tid,string tableName=TEA_TABLE_NAME);
 	//登录时检查账号和密码
 	static bool find(const string id,const string password,string tableName=TEA_TABLE_NAME);
 	//根据教师的id返回该教师

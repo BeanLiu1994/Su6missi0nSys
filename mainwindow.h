@@ -18,6 +18,7 @@
 #include "dao/CourseStuDao.h"
 #include "entity/Upload.h"
 #include "dao/UploadDao.h"
+#include <QMenu>
 
 
 namespace Ui {
@@ -34,7 +35,15 @@ public:
     bool AdminLogin();
 public slots:
     void TeacherQuery();
+    void CourseQuery();
+    void StudentQuery();
+    void TeacherAdd();
+    void CourseAdd();
+    void StudentAdd();
+private slots:
+    void TeacherDoubleClicked(QTableWidgetItem *item);
 private:
+
     Ui::MainWindow *ui;
 
 };
