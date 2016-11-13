@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>762</width>
-    <height>417</height>
+    <height>585</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,58 +29,16 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QPlainTextEdit" name="teacher_id_input">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="tabChangesFocus">
-             <bool>true</bool>
-            </property>
+           <widget class="QLineEdit" name="teacher_id_input">
             <property name="placeholderText">
-             <string>id</string>
+             <string>Id</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="teacher_name_input">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="tabChangesFocus">
-             <bool>true</bool>
-            </property>
+           <widget class="QLineEdit" name="teacher_name_input">
             <property name="placeholderText">
-             <string>name</string>
+             <string>Name</string>
             </property>
            </widget>
           </item>
@@ -123,58 +81,16 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QPlainTextEdit" name="student_id_input">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="tabChangesFocus">
-             <bool>true</bool>
-            </property>
+           <widget class="QLineEdit" name="student_id_input">
             <property name="placeholderText">
-             <string>id</string>
+             <string>Id</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="student_name_input">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="tabChangesFocus">
-             <bool>true</bool>
-            </property>
+           <widget class="QLineEdit" name="student_name_input">
             <property name="placeholderText">
-             <string>name</string>
+             <string>Name</string>
             </property>
            </widget>
           </item>
@@ -219,86 +135,26 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
-         <widget class="QPlainTextEdit" name="course_id_input">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="tabChangesFocus">
-           <bool>true</bool>
-          </property>
+         <widget class="QLineEdit" name="course_id_input">
           <property name="placeholderText">
-           <string>id</string>
+           <string>Id</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPlainTextEdit" name="course_name_input">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="tabChangesFocus">
-           <bool>true</bool>
-          </property>
+         <widget class="QLineEdit" name="course_name_input">
           <property name="placeholderText">
-           <string>name</string>
+           <string>Name</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPlainTextEdit" name="course_tid_input">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="tabChangesFocus">
+         <widget class="QLineEdit" name="course_tid_input">
+          <property name="readOnly">
            <bool>true</bool>
           </property>
           <property name="placeholderText">
-           <string>tid</string>
+           <string>TeacherId</string>
           </property>
          </widget>
         </item>

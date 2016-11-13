@@ -2,23 +2,29 @@
 #include "ui_mainwindow.h"
 
 
+void SetTableWidgetStyle(QTableWidget* tbw)
+{
+    tbw->setSelectionBehavior(QAbstractItemView::SelectRows);
+    tbw->horizontalHeader()->setHighlightSections(false);
+    tbw->setSelectionMode(QAbstractItemView::ExtendedSelection);
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->teacher_table->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->student_table->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->course_table->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->teacher_table->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    ui->student_table->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    ui->course_table->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    connect(ui->TeacherRefresh, SIGNAL (released()),this, SLOT (TeacherQuery()));
-    connect(ui->StudentRefresh, SIGNAL (released()),this, SLOT (StudentQuery()));
-    connect(ui->CourseRefresh, SIGNAL (released()),this, SLOT (CourseQuery()));
+    SetTableWidgetStyle(ui->teacher_table);
+    SetTableWidgetStyle(ui->student_table);
+    SetTableWidgetStyle(ui->course_table);
     TeacherQuery();
     StudentQuery();
     CourseQuery();
+
+    connect(ui->TeacherRefresh, SIGNAL (released()),this, SLOT (TeacherQuery()));
+    connect(ui->StudentRefresh, SIGNAL (released()),this, SLOT (StudentQuery()));
+    connect(ui->CourseRefresh, SIGNAL (released()),this, SLOT (CourseQuery()));
+
     connect(ui->teacher_add, SIGNAL (released()),this, SLOT (TeacherAdd()));
     connect(ui->student_add, SIGNAL (released()),this, SLOT (StudentAdd()));
     connect(ui->course_add, SIGNAL (released()),this, SLOT (CourseAdd()));
@@ -26,7 +32,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->teacher_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(TeacherDoubleClicked(QTableWidgetItem*)));
     connect(ui->student_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(StudentDoubleClicked(QTableWidgetItem*)));
     connect(ui->course_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(CourseDoubleClicked(QTableWidgetItem*)));
+
+    connect(ui->teacher_table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(TeacherIdSelected(QTableWidgetItem*)));
 }
+void MainWindow::TeacherIdSelected(QTableWidgetItem *item)
+{
+    QString id = ui->teacher_table->item(item->row(),1)->text();
+    ui->course_tid_input->setText(id);
+}
+
 void MainWindow::TeacherDoubleClicked(QTableWidgetItem *item)
 {
     string id = ui->teacher_table->item(item->row(),1)->text().toLocal8Bit().toStdString();
@@ -74,8 +88,8 @@ void MainWindow::TeacherQuery()
 void MainWindow::TeacherAdd()
 {
     Teacher t;
-    t.setId(ui->teacher_id_input->toPlainText().toLocal8Bit().toStdString());
-    t.setName(ui->teacher_name_input->toPlainText().toLocal8Bit().toStdString());
+    t.setId(ui->teacher_id_input->text().toLocal8Bit().toStdString());
+    t.setName(ui->teacher_name_input->text().toLocal8Bit().toStdString());
     t.setPassword("123456");
     if(!TeacherDao::findTeacherByTid(t.getId()).getId().empty())
     {
@@ -106,8 +120,8 @@ void MainWindow::StudentQuery()
 void MainWindow::StudentAdd()
 {
     Student s;
-    s.setId(ui->student_id_input->toPlainText().toLocal8Bit().toStdString());
-    s.setName(ui->student_name_input->toPlainText().toLocal8Bit().toStdString());
+    s.setId(ui->student_id_input->text().toLocal8Bit().toStdString());
+    s.setName(ui->student_name_input->text().toLocal8Bit().toStdString());
     s.setPassword("123456");
     if(!StudentDao::findStudentBySid(s.getId()).getId().empty())
     {
@@ -139,9 +153,9 @@ void MainWindow::CourseQuery()
 void MainWindow::CourseAdd()
 {
     Course s;
-    s.setId(ui->course_id_input->toPlainText().toLocal8Bit().toStdString());
-    s.setName(ui->course_name_input->toPlainText().toLocal8Bit().toStdString());
-    s.setTeacherId(ui->course_tid_input->toPlainText().toStdString());
+    s.setId(ui->course_id_input->text().toLocal8Bit().toStdString());
+    s.setName(ui->course_name_input->text().toLocal8Bit().toStdString());
+    s.setTeacherId(ui->course_tid_input->text().toStdString());
     if(!CourseDao::findCourseByCid(s.getId()).getId().empty())
     {
         CourseDao::updateTid(s,s.getTeacherId());

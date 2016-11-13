@@ -44,6 +44,7 @@ private slots:
     void TeacherDoubleClicked(QTableWidgetItem *item);
     void StudentDoubleClicked(QTableWidgetItem *item);
     void CourseDoubleClicked(QTableWidgetItem *item);
+    void TeacherIdSelected(QTableWidgetItem* item);
 private:
 
     Ui::MainWindow *ui;
