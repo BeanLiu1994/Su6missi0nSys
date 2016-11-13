@@ -13,6 +13,12 @@ bool CourseDao::insertRecord( const Course& s,string tableName)
 	string sql="insert into "+tableName+"(cid,cname,tid) value('"+s.getId()+"','"+s.getName()+"','"+s.getTeacherId()+"');";
 	return dBUtil->executeSQL(sql.c_str());
 }
+bool CourseDao::deleteRecord(const string& cid, string tableName)
+{
+    string sql="delete from "+tableName+" where cid='"+cid+"';";
+	pRecordset=dBUtil->getRecordSet(sql.c_str());
+	return true;
+}
 vector<Course> CourseDao::findCourseByTid(const Teacher& t,string tableName){
 	vector<Course> v=findCourseByTid(t.getId());
 	return v;

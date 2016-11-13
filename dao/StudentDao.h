@@ -23,7 +23,9 @@ public:
 
 	//插入一条学生的记录
 	static bool insertRecord(const Student& s,string tableName=STU_TABLE_NAME);
-	//修改老师的姓名
+	//删除学生
+	static bool deleteRecord(const string& sid,string tableName=STU_TABLE_NAME);
+	//修改学生的姓名
 	static bool updateName(Student& s,string newName,string tableName=STU_TABLE_NAME);
 	//修改学生的密码
 	static bool updatePassword(Student& s,const string newPassword,string tableName=STU_TABLE_NAME);

@@ -13,6 +13,12 @@ bool StudentDao::insertRecord( const Student& s,string tableName)
 	string sql="insert into "+tableName+"(sid,sname,spassword) value('"+s.getId()+"','"+s.getName()+"','"+s.getPassword()+"');";
 	return dBUtil->executeSQL(sql.c_str());
 }
+bool StudentDao::deleteRecord(const string& sid, string tableName)
+{
+    string sql="delete from "+tableName+" where sid='"+sid+"';";
+	pRecordset=dBUtil->getRecordSet(sql.c_str());
+	return true;
+}
 bool StudentDao::updateName(Student& s,string newName,string tableName)
 {
 	s.setName(newName);

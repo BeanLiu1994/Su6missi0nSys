@@ -7,6 +7,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->teacher_table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->student_table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->course_table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->teacher_table->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    ui->student_table->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    ui->course_table->setSelectionMode(QAbstractItemView::ExtendedSelection);
     connect(ui->TeacherRefresh, SIGNAL (released()),this, SLOT (TeacherQuery()));
     connect(ui->StudentRefresh, SIGNAL (released()),this, SLOT (StudentQuery()));
     connect(ui->CourseRefresh, SIGNAL (released()),this, SLOT (CourseQuery()));
@@ -17,12 +23,24 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->student_add, SIGNAL (released()),this, SLOT (StudentAdd()));
     connect(ui->course_add, SIGNAL (released()),this, SLOT (CourseAdd()));
 
-    connect(ui->teacher_table,SIGNAL(itemDoubleClicked()),this,SLOT(TeacherDoubleClicked()));
+    connect(ui->teacher_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(TeacherDoubleClicked(QTableWidgetItem*)));
 }
 void MainWindow::TeacherDoubleClicked(QTableWidgetItem *item)
 {
-    string id = ui->teacher_table->itemAt(item->row(),0)->text().toLocal8Bit().toStdString();
+    string id = ui->teacher_table->item(item->row(),1)->text().toLocal8Bit().toStdString();
     TeacherDao::deleteRecord(id);
+    TeacherQuery();
+}
+void MainWindow::StudentDoubleClicked(QTableWidgetItem *item)
+{
+    string id = ui->teacher_table->item(item->row(),1)->text().toLocal8Bit().toStdString();
+    StudentDao::deleteRecord(id);
+    TeacherQuery();
+}
+void MainWindow::CourseDoubleClicked(QTableWidgetItem *item)
+{
+    string id = ui->course_table->item(item->row(),1)->text().toLocal8Bit().toStdString();
+    CourseDao::deleteRecord(id);
     TeacherQuery();
 }
 MainWindow::~MainWindow()
@@ -70,7 +88,7 @@ void MainWindow::TeacherAdd()
 void MainWindow::StudentQuery()
 {
     vector<Student> ts=StudentDao::findAllStudents();
-    printf("length: %d\n",ts.size());
+    //printf("length: %d\n",ts.size());
     QStringList header;
     header<<tr("Name")<<tr("Id");
     ui->student_table->setHorizontalHeaderLabels(header);
@@ -102,7 +120,7 @@ void MainWindow::StudentAdd()
 void MainWindow::CourseQuery()
 {
     vector<Course> ts=CourseDao::findAllCourses();
-    printf("length: %d\n",ts.size());
+    //printf("length: %d\n",ts.size());
     QStringList header;
     header<<tr("Name")<<tr("Id")<<tr("TeacherId");
     ui->course_table->setHorizontalHeaderLabels(header);

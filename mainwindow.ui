@@ -333,20 +333,11 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>默认添加的密码为&quot;123456&quot;</string>
+       <string>默认添加的密码为&quot;123456&quot;  双击删除,如果不能删除说明外键限制不满足</string>
       </property>
      </widget>
     </item>
    </layout>
-   <zorder>teacher_table</zorder>
-   <zorder>label1</zorder>
-   <zorder>TeacherRefresh</zorder>
-   <zorder>label2</zorder>
-   <zorder>student_table</zorder>
-   <zorder>StudentRefresh</zorder>
-   <zorder>layoutWidget</zorder>
-   <zorder>label1</zorder>
-   <zorder>label</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

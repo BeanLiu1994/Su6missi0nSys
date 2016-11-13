@@ -23,6 +23,8 @@ public:
 
 	//插入一条课程的记录
 	static bool insertRecord(const Course& s,string tableName=COURSE_TABLE_NAME);
+	//删除课程
+	static bool deleteRecord(const string& cid,string tableName=COURSE_TABLE_NAME);
 	//更新名字
 	static bool updateName(Course& s,string NewName, string tableName=COURSE_TABLE_NAME);
 	//更新Tid
