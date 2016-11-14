@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     dao/WorkDao.cpp \
     utils/DBUtil.cpp \
     loginui.cpp \
-    adminui.cpp
+    adminui.cpp \
+    studentui.cpp \
+    teacherui.cpp
 
 HEADERS  += mainwindow.h \
     dao/CourseDao.h \
@@ -39,8 +41,13 @@ HEADERS  += mainwindow.h \
     utils/DBUtil.h \
     propertymaker.h \
     loginui.h \
-    adminui.h
+    adminui.h \
+    studentui.h \
+    headers.h \
+    teacherui.h
 
 FORMS    += mainwindow.ui \
     loginui.ui \
-    adminui.ui
+    adminui.ui \
+    studentui.ui \
+    teacherui.ui

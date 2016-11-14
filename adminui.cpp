@@ -1,8 +1,6 @@
 #include "adminui.h"
 #include "ui_adminui.h"
-#include "propertymaker.h"
 #include "loginui.h"
-#include <QCloseEvent>
 
 
 void SetTableWidgetStyle(QTableWidget* tbw)

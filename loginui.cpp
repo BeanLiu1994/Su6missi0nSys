@@ -1,6 +1,9 @@
 #include "loginui.h"
 #include "ui_loginui.h"
 #include "adminui.h"
+#include "studentui.h"
+#include "teacherui.h"
+
 
 #include "dao/StudentDao.h"
 #include "dao/TeacherDao.h"
@@ -63,8 +66,7 @@ bool LoginUi::AdminLoginProcess()
     bool result = (Id=="app"&&Password=="visg");
     if(result)
     {
-        connect(this,SIGNAL(AdminLoggedIn(string)),AdminUI::GetCurrent(),SLOT(show()));
-        emit AdminLoggedIn(Id);
+        AdminUI::GetCurrent()->show();
     }
     return result;
 }
@@ -72,13 +74,17 @@ bool LoginUi::TeacherLoginProcess()
 {
     bool result = TeacherDao::find(Id,Password);
     if(result)
-        emit TeacherLoggedIn(Id);
+    {
+        TeacherUi::GetCurrent()->setId(QString::fromLocal8Bit(Id.c_str()));
+    }
     return result;
 }
 bool LoginUi::StudentLoginProcess()
 {
     bool result = StudentDao::find(Id,Password);
     if(result)
-        emit StudentLoggedIn(Id);
+    {
+        StudentUi::GetCurrent()->setId(QString::fromLocal8Bit(Id.c_str()));
+    }
     return result;
 }

@@ -1,9 +1,7 @@
 #ifndef LOGINUI_H
 #define LOGINUI_H
 
-#include <QDialog>
-#include <iostream>
-using std::string;
+#include "headers.h"
 
 namespace Ui {
 class LoginUi;
@@ -18,10 +16,6 @@ public:
     ~LoginUi();
     string Id;
     string Password;
-signals:
-    void TeacherLoggedIn(string Id);
-    void AdminLoggedIn(string Id);
-    void StudentLoggedIn(string Id);
 
 public slots:
     void ExitFromSubDialog();

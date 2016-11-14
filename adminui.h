@@ -1,27 +1,8 @@
 #ifndef ADMINUI_H
 #define ADMINUI_H
 
-#include <QWidget>
-#include <QListWidget>
-#include <QListWidgetItem>
+#include "headers.h"
 #include "ui_mainwindow.h"
-#include "utils/DBUtil.h"
-#include "entity/Student.h"
-#include "dao/StudentDao.h"
-#include "entity/Teacher.h"
-#include "dao/TeacherDao.h"
-#include "entity/Course.h"
-#include "dao/CourseDao.h"
-#include "entity/Work.h"
-#include "dao/WorkDao.h"
-#include "dao/CourseStuDao.h"
-#include "entity/Upload.h"
-#include "dao/UploadDao.h"
-#include <QMenu>
-
-#include <QMainWindow>
-#include <QTableWidget>
-#include <QTableWidgetItem>
 
 namespace Ui {
 class AdminUI;
