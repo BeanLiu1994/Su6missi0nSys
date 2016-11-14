@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    AdminUI admUI;
+    AdminUI::GetCurrent();
 
     //w.show();
     LoginUi l;

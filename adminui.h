@@ -32,9 +32,9 @@ class AdminUI : public QDialog
 public:
     explicit AdminUI(QWidget *parent = 0);
     ~AdminUI();
-    bool AdminLogin();
 
 public slots:
+    void show();
     void TeacherQuery();
     void TeacherAdd();
     void StudentQuery();
@@ -56,6 +56,21 @@ private slots:
     void CourseIdSelected(QTableWidgetItem *item);
 private:
     Ui::AdminUI *ui;
+
+protected:
+    void closeEvent(QCloseEvent*);
+
+public:
+    static AdminUI * GetCurrent()
+    {
+        if(Current==nullptr)
+            new AdminUI();
+        return Current;
+    }
+private:
+    static AdminUI * Current;
+
+
 };
 
 #endif // ADMINUI_H

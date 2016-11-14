@@ -97,6 +97,7 @@ void DBUtil::exitConnect()
  //关闭记录集和连接
  if(m_pRecordset !=NULL)
   m_pRecordset->Close();
+ if(m_pConnection !=NULL)
   m_pConnection->Close();
  //释放环境
  ::CoUninitialize();//关闭ole/com库，释放资源

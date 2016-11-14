@@ -1,6 +1,8 @@
 #include "adminui.h"
 #include "ui_adminui.h"
 #include "propertymaker.h"
+#include "loginui.h"
+#include <QCloseEvent>
 
 
 void SetTableWidgetStyle(QTableWidget* tbw)
@@ -9,20 +11,18 @@ void SetTableWidgetStyle(QTableWidget* tbw)
     tbw->horizontalHeader()->setHighlightSections(false);
     tbw->setSelectionMode(QAbstractItemView::ExtendedSelection);
 }
-
+AdminUI * AdminUI::Current = nullptr;
 AdminUI::AdminUI(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AdminUI)
 {
+    Current=this;
+
     ui->setupUi(this);
     SetTableWidgetStyle(ui->teacher_table);
     SetTableWidgetStyle(ui->student_table);
     SetTableWidgetStyle(ui->course_table);
     SetTableWidgetStyle(ui->course_student_table);
-    TeacherQuery();
-    StudentQuery();
-    CourseQuery();
-    CourseStudentQuery();
 
     connect(ui->TeacherRefresh, SIGNAL (released()),this, SLOT (TeacherQuery()));
     connect(ui->StudentRefresh, SIGNAL (released()),this, SLOT (StudentQuery()));
@@ -45,17 +45,25 @@ AdminUI::AdminUI(QWidget *parent) :
 
 }
 
-AdminUI::~AdminUI()
+void AdminUI::show()
 {
-    delete ui;
+    QDialog::show();
+
+    TeacherQuery();
+    StudentQuery();
+    CourseQuery();
+    CourseStudentQuery();
+}
+
+void AdminUI::closeEvent(QCloseEvent * event)
+{
+    LoginUi::GetCurrent()->ExitFromSubDialog();
 }
 
 
-bool AdminUI::AdminLogin()
+AdminUI::~AdminUI()
 {
-    //bool Success=QueryForAdminInfo();
-    bool Success=true;
-    return Success;
+    delete ui;
 }
 
 
