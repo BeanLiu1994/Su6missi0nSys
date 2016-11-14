@@ -127,7 +127,7 @@ void AdminUI::TeacherQuery()
     vector<Teacher> ts=TeacherDao::findAllTeachers();
     QStringList header;
     header<<tr("Name")<<tr("Id");
-    ui->course_student_table->setColumnCount(2);
+    ui->course_student_table->setColumnCount(header.size());
     ui->teacher_table->setHorizontalHeaderLabels(header);
     ui->teacher_table->setRowCount((int)ts.size());
     ui->teacher_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -161,7 +161,7 @@ void AdminUI::StudentQuery()
     //printf("length: %d\n",ts.size());
     QStringList header;
     header<<tr("Name")<<tr("Id");
-    ui->course_student_table->setColumnCount(2);
+    ui->course_student_table->setColumnCount(header.size());
     ui->student_table->setHorizontalHeaderLabels(header);
     ui->student_table->setRowCount((int)ts.size());
     ui->student_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -195,7 +195,7 @@ void AdminUI::CourseQuery()
     //printf("length: %d\n",ts.size());
     QStringList header;
     header<<tr("Name")<<tr("Id")<<tr("TeacherId");
-    ui->course_student_table->setColumnCount(3);
+    ui->course_student_table->setColumnCount(header.size());
     ui->course_table->setHorizontalHeaderLabels(header);
     ui->course_table->setRowCount((int)ts.size());
     ui->course_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -213,7 +213,7 @@ void AdminUI::CourseQueryTid(string & tid)
     //printf("length: %d\n",ts.size());
     QStringList header;
     header<<tr("Name")<<tr("Id")<<tr("TeacherId");
-    ui->course_student_table->setColumnCount(3);
+    ui->course_student_table->setColumnCount(header.size());
     ui->course_table->setHorizontalHeaderLabels(header);
     ui->course_table->setRowCount((int)ts.size());
     ui->course_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -248,7 +248,7 @@ void AdminUI::CourseStudentQuery()
     //printf("length: %d\n",ts.size());
     QStringList header;
     header<<tr("StudentId")<<tr("CourseId");
-    ui->course_student_table->setColumnCount(2);
+    ui->course_student_table->setColumnCount(header.size());
     ui->course_student_table->setHorizontalHeaderLabels(header);
     ui->course_student_table->setRowCount((int)ts.size());
     ui->course_student_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -261,10 +261,10 @@ void AdminUI::CourseStudentQuery()
 }
 void AdminUI::CourseStudentQuerySid(string &sid)
 {
-    vector<Course> ts=CourseStuDao::findCourseBySid(sid);
+    vector<Course> ts=CourseStuDao::findCourseBySidQuick(sid);
     QStringList header;
-    header<<tr("StudentId")<<tr("CourseId");
-    ui->course_student_table->setColumnCount(2);
+    header<<tr("StudentId")<<tr("CourseId")<<tr("CourseName");
+    ui->course_student_table->setColumnCount(header.size());
     ui->course_student_table->setHorizontalHeaderLabels(header);
     ui->course_student_table->setRowCount((int)ts.size());
     ui->course_student_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -273,22 +273,24 @@ void AdminUI::CourseStudentQuerySid(string &sid)
         Course & m = ts[i];
         ui->course_student_table->setItem(i,0,new QTableWidgetItem(QString::fromLocal8Bit(sid.c_str())));
         ui->course_student_table->setItem(i,1,new QTableWidgetItem(QString::fromLocal8Bit(m.getId().c_str())));
+        ui->course_student_table->setItem(i,2,new QTableWidgetItem(QString::fromLocal8Bit(m.getName().c_str())));
     }
 }
 void AdminUI::CourseStudentQueryCid(string &cid)
 {
-    vector<Student> ts=CourseStuDao::findStudentByCid(cid);
+    vector<Student> ts=CourseStuDao::findStudentByCidQuick(cid);
     QStringList header;
-    header<<tr("StudentId")<<tr("CourseId");
-    ui->course_student_table->setColumnCount(2);
+    header<<tr("CourseId")<<tr("StudentId")<<tr("StudentName");
+    ui->course_student_table->setColumnCount(header.size());
     ui->course_student_table->setHorizontalHeaderLabels(header);
     ui->course_student_table->setRowCount((int)ts.size());
     ui->course_student_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     for(int i=0;i<ts.size();++i)
     {
         Student & m = ts[i];
-        ui->course_student_table->setItem(i,0,new QTableWidgetItem(QString::fromLocal8Bit(m.getId().c_str())));
-        ui->course_student_table->setItem(i,1,new QTableWidgetItem(QString::fromLocal8Bit(cid.c_str())));
+        ui->course_student_table->setItem(i,1,new QTableWidgetItem(QString::fromLocal8Bit(m.getId().c_str())));
+        ui->course_student_table->setItem(i,2,new QTableWidgetItem(QString::fromLocal8Bit(m.getName().c_str())));
+        ui->course_student_table->setItem(i,0,new QTableWidgetItem(QString::fromLocal8Bit(cid.c_str())));
     }
 }
 void AdminUI::CourseStudentAdd()
