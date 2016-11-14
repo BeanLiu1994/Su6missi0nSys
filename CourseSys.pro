@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     dao/TeacherDao.cpp \
     dao/UploadDao.cpp \
     dao/WorkDao.cpp \
-    utils/DBUtil.cpp
+    utils/DBUtil.cpp \
+    loginui.cpp \
+    adminui.cpp
 
 HEADERS  += mainwindow.h \
     dao/CourseDao.h \
@@ -35,6 +37,10 @@ HEADERS  += mainwindow.h \
     entity/Upload.h \
     entity/Work.h \
     utils/DBUtil.h \
-    propertymaker.h
+    propertymaker.h \
+    loginui.h \
+    adminui.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    loginui.ui \
+    adminui.ui

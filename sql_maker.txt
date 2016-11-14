@@ -1,0 +1,129 @@
+use submissionsystem;
+
+/*
+create database submissionSystem;
+use submissionSystem;
+*/
+/*
+创建学生的表格
+*/
+
+/*
+select * from student;
+drop table upload;
+drop table work;
+drop table course_stu;
+drop table course;
+drop table student;
+drop table teacher;*/
+/*
+create database submissionSystem;
+use submissionSystem;
+*/
+/*
+创建学生的表格
+*/
+create table student(
+	sid varchar(20),
+    sname varchar(20) not null,
+    spassword varchar(20) not null,
+    primary key(sid)
+)CHARACTER SET utf8;
+
+/*
+创建老师的表格
+*/
+create table teacher(
+	tid varchar(20),
+    tname varchar(20) not null,
+    tpassword varchar(20) not null,
+    primary key(tid)
+)CHARACTER SET utf8;
+
+
+/*
+创建课程的表格，课程中的tid列是teacher表格中的外键
+*/
+create table course(
+	cid varchar(20),
+    cname varchar(20) not null,
+    tid varchar(20) not null,
+    primary key(cid),
+    constraint teacher_id_fk foreign key(tid) references teacher(tid)
+)CHARACTER SET utf8;
+
+/*
+创建学生的选课表，cid和sid为联合主键，且分别为course表的外键和student表的外键
+*/
+create table course_stu(
+	cid varchar(20),
+    sid varchar(20),
+    primary key(cid,sid),
+    constraint course_id_fk foreign key(cid) references course(cid),
+    constraint stu_id_fk foreign key(sid) references student(sid)
+)CHARACTER SET utf8;
+
+
+create table work(
+	wid varchar(20) primary key,
+    cid varchar(20) not null,
+    wtime varchar(5) not null ,
+    wcontent text,
+    wanswer text,
+	wdeadtime date,
+    constraint course_id_inwork_fk foreign key(cid) references course(cid)    
+)CHARACTER SET utf8;
+create table upload(
+	uid varchar(20) primary key,
+    sid varchar(20) not null,
+    wid varchar(20) not null,
+    ucontent text not null,
+    uscore int ,
+    constraint stu_id_inupload_fk foreign key(sid) references student(sid),
+    constraint work_id_inupload_fk foreign key(wid) references work(wid) 
+)CHARACTER SET utf8;
+
+
+insert into student(sid,sname,spassword) value('mf1523001','li lei','123');
+update student set spassword='4563' where sid='mf1523002';
+insert into teacher(tid,tname,tpassword) value('t1004','李炎峻','test');
+select * from student where sid='mf1523001' and spassword='123';
+insert into course(cid,cname,tid) value('c0001','electric blabla','t1004');
+insert into course_stu(cid,sid) value('c0001','mf1523001');
+insert into work(wid,cid,wtime) value('w0001','c0001',1);
+insert into work(wid,cid,wtime,wcontent,wanswer,wdeadtime) value('w0002','c0001',2,'solve the 2.1 in your book','answer is 1.5','2016-11-09');
+
+
+/* show databases;
+show tables;
+select * from student;
+select * from course;
+select * from student;
+select * from teacher;
+select * from upload;
+select * from work;
+select * from course_stu; */
+
+grant all privileges on submissionSystem.* to app@'%' identified by 'visg';
+
+grant select,update on submissionSystem.student to app_student@'%' identified by 'stu';
+grant select on submissionSystem.course_stu to app_student@'%' identified by 'stu';
+grant select,update,insert,delete on submissionSystem.upload to app_student@'%' identified by 'stu';
+
+grant select,update on submissionSystem.teacher to app_teacher@'%' identified by 'tea';
+grant select on submissionSystem.course to app_teacher@'%' identified by 'tea';
+grant select,update,insert,delete on submissionSystem.work to app_teacher@'%' identified by 'tea';
+grant select,update on submissionSystem.upload to app_teacher@'%' identified by 'tea';
+
+flush?privileges;
+
+
+
+
+
+
+
+
+
+
+
