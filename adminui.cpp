@@ -13,7 +13,7 @@ void SetTableWidgetStyle(QTableWidget* tbw)
 }
 AdminUI * AdminUI::Current = nullptr;
 AdminUI::AdminUI(QWidget *parent) :
-    QDialog(parent),
+    QMainWindow(parent),
     ui(new Ui::AdminUI)
 {
     Current=this;
@@ -47,7 +47,7 @@ AdminUI::AdminUI(QWidget *parent) :
 
 void AdminUI::show()
 {
-    QDialog::show();
+    QMainWindow::show();
 
     TeacherQuery();
     StudentQuery();

@@ -19,13 +19,15 @@
 #include "dao/UploadDao.h"
 #include <QMenu>
 
-#include <QDialog>
+#include <QMainWindow>
+#include <QTableWidget>
+#include <QTableWidgetItem>
 
 namespace Ui {
 class AdminUI;
 }
 
-class AdminUI : public QDialog
+class AdminUI : public QMainWindow
 {
     Q_OBJECT
 
