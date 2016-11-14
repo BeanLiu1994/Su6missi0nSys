@@ -1,8 +1,9 @@
 # Su6missi0nSys
-����ODBC��
-	�Ȱٶ�һ��64λ��mysql ODBC connector,��ȥ����������ӣ��˺��������Ƽ�Ⱥ��
-	ע��ODBC������Ҫ����Ϊ"app"
+配置ODBC：
+	先百度一个64位的mysql ODBC connector,再去控制面板添加，账号密码名称见群。
+	注意ODBC的名称要设置为"app"
 
-QT����ʱ��
-	��ǰֻ�õ���QT��һ���ֹ��ܣ�����runtimeֻ��Ҫ���Ƽ���dll������Ŀ¼��
+QT运行时：
+	当前只用到了QT的一部分功能，所以runtime只需要复制几个dll到运行目录。
 	
+这个工程用的是QT5. 编译器为VS2015自带的编译器.
