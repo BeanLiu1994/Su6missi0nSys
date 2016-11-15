@@ -45,6 +45,7 @@ AdminUI::AdminUI(QWidget *parent) :
     connect(ui->course_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(CourseDoubleClicked(QTableWidgetItem*)));
     connect(ui->course_student_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(CourseStudentDoubleClicked(QTableWidgetItem*)));
     connect(ui->work_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(WorkDoubleClicked(QTableWidgetItem*)));
+    connect(ui->upload_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(UploadDoubleClicked(QTableWidgetItem*)));
 
     connect(ui->teacher_table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(TeacherIdSelected(QTableWidgetItem*)));
     connect(ui->student_table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(StudentIdSelected(QTableWidgetItem*)));
@@ -453,7 +454,7 @@ void AdminUI::UploadDoubleClicked(QTableWidgetItem *item)
 {
     upload_edit *edt = new upload_edit(this);
     connect(edt,SIGNAL(uploadChanged()),this,SLOT(UploadQuery()));
-    string id = ui->work_table->item(item->row(),0)->text().toLocal8Bit().toStdString();
+    string id = ui->upload_table->item(item->row(),0)->text().toLocal8Bit().toStdString();
     edt->init(id);
     edt->show();
 }
