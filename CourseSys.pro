@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     loginui.cpp \
     adminui.cpp \
     studentui.cpp \
-    teacherui.cpp
+    teacherui.cpp \
+    work_edit.cpp
 
 HEADERS  += mainwindow.h \
     dao/CourseDao.h \
@@ -44,10 +45,12 @@ HEADERS  += mainwindow.h \
     adminui.h \
     studentui.h \
     headers.h \
-    teacherui.h
+    teacherui.h \
+    work_edit.h
 
 FORMS    += mainwindow.ui \
     loginui.ui \
     adminui.ui \
     studentui.ui \
-    teacherui.ui
+    teacherui.ui \
+    work_edit.ui

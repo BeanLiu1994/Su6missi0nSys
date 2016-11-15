@@ -29,17 +29,19 @@ public slots:
     void CourseStudentQuerySid(string &sid);
     void CourseStudentQueryCid(string &cid);
     void CourseStudentAdd();
+    void WorkQuery();
 private slots:
     void TeacherDoubleClicked(QTableWidgetItem *item);
     void StudentDoubleClicked(QTableWidgetItem *item);
     void CourseDoubleClicked(QTableWidgetItem *item);
     void CourseStudentDoubleClicked(QTableWidgetItem *item);
+    void WorkDoubleClicked(QTableWidgetItem *item);
     void TeacherIdSelected(QTableWidgetItem* item);
     void StudentIdSelected(QTableWidgetItem *item);
     void CourseIdSelected(QTableWidgetItem *item);
 private:
     Ui::AdminUI *ui;
-
+    vector<QWidget *> windows;
 protected:
     void closeEvent(QCloseEvent*);
 

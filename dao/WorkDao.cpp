@@ -10,14 +10,11 @@ DBUtil* WorkDao::dBUtil=DBUtil::getInstance();
 
 bool WorkDao::insertRecord( const Work& s,string tableName)
 {
-
-	
-
 	string sql="insert into "+tableName+"(wid,cid,wtime,wcontent,wanswer,wdeadtime) value('"+s.getId()+"','"+s.getCourseId()+"','"+s.getTime()+"','"+s.getContent()+"','"+s.getAnswer()+"','"+s.getDate()+"');";
 	return dBUtil->executeSQL(sql.c_str());
 }
-Work WorkDao::findWork(const string& cid,const string&wtime,string tableName){
-	string sql="select * from "+tableName+" where cid='"+cid+"' and wtime="+wtime+";";
+Work WorkDao::findWorkByCid(const string& cid,const string&wtime,string tableName){
+    string sql="select * from "+tableName+" where cid='"+cid+"' and wtime="+wtime+";";
 	pRecordset=dBUtil->getRecordSet(sql.c_str());
 	Work w;
 	if(!pRecordset->adoEOF)
@@ -41,6 +38,60 @@ Work WorkDao::findWork(const string& cid,const string&wtime,string tableName){
 	}
 	return w;
 }
+Work WorkDao::findWorkByWid(const string& wid,string tableName)
+{
+    string sql="select * from "+tableName+" where wid='"+wid+"';";
+    pRecordset=dBUtil->getRecordSet(sql.c_str());
+    Work w;
+    if(!pRecordset->adoEOF)
+    {
+        string id=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wid"));
+        string cid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("cid"));
+        string wtime=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wtime"));
+        string wcontent=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wcontent"));
+        string wanswer=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wanswer"));
+        string wdeadtime=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wdeadtime"));
+
+        w.setId(id);
+        w.setCourseId(cid);
+        w.setTime(wtime);
+        w.setContent(wcontent);
+        w.setAnswer(wanswer);
+        w.setDate(wdeadtime);
+
+        //cout<<w.toString()<<endl;
+
+    }
+    return w;
+}
+vector<Work> WorkDao::findAllWorks (string tableName)
+{
+    string sql="select * from "+tableName+";";
+    pRecordset=dBUtil->getRecordSet(sql.c_str());
+    vector<Work> v;
+    Work w;
+    while(!pRecordset->adoEOF)
+    {
+        string id=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wid"));
+        string cid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("cid"));
+        string wtime=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wtime"));
+        string wcontent=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wcontent"));
+        string wanswer=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wanswer"));
+        string wdeadtime=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wdeadtime"));
+
+        w.setId(id);
+        w.setCourseId(cid);
+        w.setTime(wtime);
+        w.setContent(wcontent);
+        w.setAnswer(wanswer);
+        w.setDate(wdeadtime);
+
+        v.push_back(w);
+        pRecordset->MoveNext();
+    }
+    return v;
+}
+
 vector<string> WorkDao::findTimesByCid (const string&cid,string tableName)
 {
 	string sql="select wtime from "+tableName+" where cid='"+cid+"';";
@@ -55,4 +106,14 @@ vector<string> WorkDao::findTimesByCid (const string&cid,string tableName)
 		pRecordset->MoveNext();
 	}
 	return v;
+}
+bool WorkDao::updateRecord(Work& w,string tableName)
+{
+    deleteRecord(w.getId());
+    return insertRecord(w);
+}
+bool WorkDao::deleteRecord(const string& wid,string tableName)
+{
+    string sql="delete from "+tableName+" where wid='"+wid+"';";
+    return dBUtil->executeSQL(sql.c_str());
 }

@@ -68,9 +68,9 @@ create table work(
 	wid varchar(20) primary key,
     cid varchar(20) not null,
     wtime varchar(5) not null ,
-    wcontent text,
-    wanswer text,
-	wdeadtime date,
+    wcontent text not null,
+    wanswer text not null,
+	wdeadtime date not null,
     constraint course_id_inwork_fk foreign key(cid) references course(cid)    
 )CHARACTER SET utf8;
 create table upload(
@@ -78,7 +78,7 @@ create table upload(
     sid varchar(20) not null,
     wid varchar(20) not null,
     ucontent text not null,
-    uscore int ,
+    uscore int default -1,
     constraint stu_id_inupload_fk foreign key(sid) references student(sid),
     constraint work_id_inupload_fk foreign key(wid) references work(wid) 
 )CHARACTER SET utf8;

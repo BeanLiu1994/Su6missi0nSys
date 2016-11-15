@@ -1,6 +1,7 @@
 #include "adminui.h"
 #include "ui_adminui.h"
 #include "loginui.h"
+#include "work_edit.h"
 
 
 void SetTableWidgetStyle(QTableWidget* tbw)
@@ -21,11 +22,13 @@ AdminUI::AdminUI(QWidget *parent) :
     SetTableWidgetStyle(ui->student_table);
     SetTableWidgetStyle(ui->course_table);
     SetTableWidgetStyle(ui->course_student_table);
+    SetTableWidgetStyle(ui->work_table);
 
     connect(ui->TeacherRefresh, SIGNAL (released()),this, SLOT (TeacherQuery()));
     connect(ui->StudentRefresh, SIGNAL (released()),this, SLOT (StudentQuery()));
     connect(ui->CourseRefresh, SIGNAL (released()),this, SLOT (CourseQuery()));
     connect(ui->CourseStudentRefresh, SIGNAL (released()),this, SLOT (CourseStudentQuery()));
+    connect(ui->WorkRefresh, SIGNAL (released()),this, SLOT (WorkQuery()));
 
     connect(ui->teacher_add, SIGNAL (released()),this, SLOT (TeacherAdd()));
     connect(ui->student_add, SIGNAL (released()),this, SLOT (StudentAdd()));
@@ -36,6 +39,7 @@ AdminUI::AdminUI(QWidget *parent) :
     connect(ui->student_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(StudentDoubleClicked(QTableWidgetItem*)));
     connect(ui->course_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(CourseDoubleClicked(QTableWidgetItem*)));
     connect(ui->course_student_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(CourseStudentDoubleClicked(QTableWidgetItem*)));
+    connect(ui->work_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(WorkDoubleClicked(QTableWidgetItem*)));
 
     connect(ui->teacher_table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(TeacherIdSelected(QTableWidgetItem*)));
     connect(ui->student_table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(StudentIdSelected(QTableWidgetItem*)));
@@ -51,6 +55,7 @@ void AdminUI::show()
     StudentQuery();
     CourseQuery();
     CourseStudentQuery();
+    WorkQuery();
 }
 
 void AdminUI::closeEvent(QCloseEvent * event)
@@ -301,3 +306,32 @@ void AdminUI::CourseStudentAdd()
     CourseStudentQuery();
 }
 
+/* Work refresh and edit*/
+void AdminUI::WorkQuery()
+{
+    vector<Work> ts=WorkDao::findAllWorks();
+    //printf("length: %d\n",ts.size());
+    QStringList header;
+    header<<tr("Workid")<<tr("CourseId")<<tr("Time")<<tr("Deadline");
+    ui->work_table->setColumnCount(header.size());
+    ui->work_table->setHorizontalHeaderLabels(header);
+    ui->work_table->setRowCount((int)ts.size());
+    ui->work_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    for(int i=0;i<ts.size();++i)
+    {
+        Work & m = ts[i];
+        ui->work_table->setItem(i,0,new QTableWidgetItem(QString::fromLocal8Bit(m.getId().c_str())));
+        ui->work_table->setItem(i,1,new QTableWidgetItem(QString::fromLocal8Bit(m.getCourseId().c_str())));
+        ui->work_table->setItem(i,2,new QTableWidgetItem(QString::fromLocal8Bit(m.getTime().c_str())));
+        ui->work_table->setItem(i,3,new QTableWidgetItem(QString::fromLocal8Bit(m.getDate().c_str())));
+    }
+}
+
+
+void AdminUI::WorkDoubleClicked(QTableWidgetItem *item)
+{
+    work_edit *edt = new work_edit(this);
+    string id = ui->work_table->item(item->row(),0)->text().toLocal8Bit().toStdString();
+    edt->init(id);
+    edt->show();
+}

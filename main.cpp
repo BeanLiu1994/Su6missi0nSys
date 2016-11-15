@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "loginui.h"
 #include "adminui.h"
+#include "studentui.h"
+#include "teacherui.h"
+#include "work_edit.h"
 #include <QApplication>
 #include <QTextCodec>
 #include<iostream>
@@ -25,13 +28,9 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    AdminUI::GetCurrent();
 
-    //w.show();
     LoginUi l;
     l.show();
-
 
 
     return a.exec();

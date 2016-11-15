@@ -21,12 +21,22 @@ private:
 public:
 
 	//插入一道题目的记录
-	static bool insertRecord(const Work& s,string tableName=WORK_TABLE_NAME);
-	//根据课程号返回该课程所有的作业批次
-	static vector<string> findTimesByCid (const string&cid,string tableName=WORK_TABLE_NAME);	
+    static bool insertRecord(const Work& s,string tableName=WORK_TABLE_NAME);
+    //根据课程号返回该课程所有的作业批次
+    static vector<string> findTimesByCid (const string&cid,string tableName=WORK_TABLE_NAME);
 	
 	//根据题目的课程号和批次返回该题目
-	static Work findWork(const string& cid,const string&wtime,string tableName=WORK_TABLE_NAME);
+    static Work findWorkByCid(const string& cid,const string&wtime,string tableName=WORK_TABLE_NAME);
+
+    //根据题目的Id返回该题目
+    static Work findWorkByWid(const string& wid,string tableName=WORK_TABLE_NAME);
+
+    //返回所有的作业
+    static vector<Work> findAllWorks (string tableName=WORK_TABLE_NAME);
+    //update a Record.
+    static bool updateRecord(Work& w,string tableName=WORK_TABLE_NAME);
+    //delete a Record.
+    static bool deleteRecord(const string& wid,string tableName=WORK_TABLE_NAME);
 };
 
 #endif
