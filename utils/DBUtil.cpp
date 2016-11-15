@@ -79,6 +79,7 @@ bool DBUtil::executeSQL(_bstr_t bstrSQL)
 {
  try
  {
+  cout<<bstrSQL<<endl;
   //是否已经连接数据库
   if(m_pConnection ==NULL)
    initDBUtil();

@@ -26,14 +26,19 @@ public:
 	//根据课程号返回该课程所有的作业批次
 	static vector<string> findTimesByCid (const string&cid,string tableName=WORK_TABLE_NAME);	
 	*/
-	//根据题目的id和学生的id返回相关的作业
-	static Upload findUpload(const string& wid,const string&sid,string tableName=UPLOAD_TABLE_NAME);
+    //根据题目的id和学生的id返回相关的作业
+    static vector<Upload> findAllUpload(string tableName=UPLOAD_TABLE_NAME);
+    static Upload findUpload(const string& uid,const string&sid,string tableName=UPLOAD_TABLE_NAME);
+    static Upload findUploadByUid(const string& uid,string tableName=UPLOAD_TABLE_NAME);
+    static vector<Upload> findUploadByWid (const string& wid,string tableName=UPLOAD_TABLE_NAME);
+    static vector<Upload> findUploadBySid (const string& sid,string tableName=UPLOAD_TABLE_NAME);
+    //delete
+    static bool deleteRecord(const string& uid,string tableName=UPLOAD_TABLE_NAME);
 	//根据作业id更新作业的答案
 	static bool updateAns(const Upload&u,string ans,string tableName=UPLOAD_TABLE_NAME);
 		//根据作业id更新作业的得分
 	static bool updateScore(const Upload&u,int score,string tableName=UPLOAD_TABLE_NAME);
-	//根据题目的id号返回该题目相关的作业
-	static vector<Upload> findUploads (const string& wid,string tableName=UPLOAD_TABLE_NAME);
+    //根据题目的id号返回该题目相关的作业
 	
 };
 

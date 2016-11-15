@@ -15,6 +15,7 @@ work_edit::work_edit(QWidget *parent) :
 void work_edit::init()
 {
     ui->wid->setReadOnly(false);
+    ui->deadline->setDate(QDate::currentDate());
 }
 void work_edit::init(string& _wid)
 {

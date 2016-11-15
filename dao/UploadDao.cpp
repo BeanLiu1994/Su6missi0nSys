@@ -21,6 +21,32 @@ bool UploadDao::insertRecord( const Upload& s,string tableName)
 		string sql="insert into "+tableName+"(uid,sid,wid,ucontent,uscore) value('"+s.getId()+"','"+s.getSid()+"','"+s.getWid()+"','"+s.getContent()+"',"+scoreStr+");";
 	return dBUtil->executeSQL(sql.c_str());
 }
+Upload UploadDao::findUploadByUid(const string& uid,string tableName)
+{
+    string sql="select * from "+tableName+" where uid='"+uid+"';";
+    pRecordset=dBUtil->getRecordSet(sql.c_str());
+    Upload u;
+    if(!pRecordset->adoEOF)
+    {
+        string id=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("uid"));
+        string wid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wid"));
+        string sid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("sid"));
+        string ucontent=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("ucontent"));
+        string scoreStr=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("uscore"));
+        //stringתint
+        int score;
+        stringstream ss;
+        ss<<scoreStr;
+        ss>>score;
+
+        u.setId(id);
+        u.setWid(wid);
+        u.setSid(sid);
+        u.setContent(ucontent);
+        u.setScore(score);
+    }
+    return u;
+}
 Upload UploadDao::findUpload(const string& wid,const string&sid,string tableName)
 {
 	string sql="select * from "+tableName+" where wid='"+wid+"' and sid='"+sid+"';";
@@ -61,7 +87,7 @@ bool UploadDao::updateScore(const Upload&u,int score,string tableName){
 	string sql="update "+tableName+" set uscore='"+scoreStr+"' where uid='"+u.getId()+"';";
 	return dBUtil->executeSQL(sql.c_str());
 }
-vector<Upload> UploadDao::findUploads (const string& wid,string tableName)
+vector<Upload> UploadDao::findUploadByWid(const string& wid,string tableName)
 {
 	string sql="select * from "+tableName+" where wid='"+wid+"';";
 	pRecordset=dBUtil->getRecordSet(sql.c_str());
@@ -92,6 +118,74 @@ vector<Upload> UploadDao::findUploads (const string& wid,string tableName)
 	
 	return v;
 }
+vector<Upload> UploadDao::findUploadBySid (const string& sid,string tableName)
+{
+    string sql="select * from "+tableName+" where sid='"+sid+"';";
+    pRecordset=dBUtil->getRecordSet(sql.c_str());
+    vector<Upload> v;
+
+    while(!pRecordset->adoEOF)
+    {
+        Upload u;
+        string id=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("uid"));
+        string wid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wid"));
+        string sid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("sid"));
+        string ucontent=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("ucontent"));
+        string scoreStr=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("uscore"));
+        //stringתint
+        int score;
+        stringstream ss;
+        ss<<scoreStr;
+        ss>>score;
+
+        u.setId(id);
+        u.setWid(wid);
+        u.setSid(sid);
+        u.setContent(ucontent);
+        u.setScore(score);
+        v.push_back(u);
+        pRecordset->MoveNext();
+    }
+
+    return v;
+}
+
+bool UploadDao::deleteRecord(const string& uid,string tableName)
+{
+    string sql="delete from "+tableName+" where uid='"+uid+"';";
+    return dBUtil->executeSQL(sql.c_str());
+}
+vector<Upload> UploadDao::findAllUpload(string tableName)
+{
+    string sql="select * from "+tableName+";";
+    pRecordset=dBUtil->getRecordSet(sql.c_str());
+    vector<Upload> v;
+
+    while(!pRecordset->adoEOF)
+    {
+        Upload u;
+        string id=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("uid"));
+        string wid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wid"));
+        string sid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("sid"));
+        string ucontent=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("ucontent"));
+        string scoreStr=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("uscore"));
+        //stringתint
+        int score;
+        stringstream ss;
+        ss<<scoreStr;
+        ss>>score;
+
+        u.setId(id);
+        u.setWid(wid);
+        u.setSid(sid);
+        u.setContent(ucontent);
+        u.setScore(score);
+        v.push_back(u);
+        pRecordset->MoveNext();
+    }
+    return v;
+}
+
 /*
 
 Work WorkDao::findWork(const string& cid,const string&wtime,string tableName){

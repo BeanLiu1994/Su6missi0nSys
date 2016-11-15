@@ -34,15 +34,22 @@ public slots:
     void WorkAdd();
     void WorkQuery();
     void WorkQueryByCid(string &cid);
+    void UploadAdd();
+    void UploadQuery();
+    void UploadQueryByWid(string &wid);
+    void UploadQueryBySid(string &sid);
 private slots:
     void TeacherDoubleClicked(QTableWidgetItem *item);
     void StudentDoubleClicked(QTableWidgetItem *item);
     void CourseDoubleClicked(QTableWidgetItem *item);
     void CourseStudentDoubleClicked(QTableWidgetItem *item);
     void WorkDoubleClicked(QTableWidgetItem *item);
+    void UploadDoubleClicked(QTableWidgetItem *item);
+
     void TeacherIdSelected(QTableWidgetItem* item);
     void StudentIdSelected(QTableWidgetItem *item);
     void CourseIdSelected(QTableWidgetItem *item);
+    void WorkIdSelected(QTableWidgetItem *item);
 private:
     Ui::AdminUI *ui;
     vector<QWidget *> windows;

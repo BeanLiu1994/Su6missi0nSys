@@ -2,6 +2,7 @@
 #include "ui_adminui.h"
 #include "loginui.h"
 #include "work_edit.h"
+#include "upload_edit.h"
 
 
 void SetTableWidgetStyle(QTableWidget* tbw)
@@ -23,18 +24,21 @@ AdminUI::AdminUI(QWidget *parent) :
     SetTableWidgetStyle(ui->course_table);
     SetTableWidgetStyle(ui->course_student_table);
     SetTableWidgetStyle(ui->work_table);
+    SetTableWidgetStyle(ui->upload_table);
 
     connect(ui->TeacherRefresh, SIGNAL (released()),this, SLOT (TeacherQuery()));
     connect(ui->StudentRefresh, SIGNAL (released()),this, SLOT (StudentQuery()));
     connect(ui->CourseRefresh, SIGNAL (released()),this, SLOT (CourseQuery()));
     connect(ui->CourseStudentRefresh, SIGNAL (released()),this, SLOT (CourseStudentQuery()));
     connect(ui->WorkRefresh, SIGNAL (released()),this, SLOT (WorkQuery()));
+    connect(ui->UploadRefresh, SIGNAL (released()),this, SLOT (UploadQuery()));
 
     connect(ui->teacher_add, SIGNAL (released()),this, SLOT (TeacherAdd()));
     connect(ui->student_add, SIGNAL (released()),this, SLOT (StudentAdd()));
     connect(ui->course_add, SIGNAL (released()),this, SLOT (CourseAdd()));
     connect(ui->course_student_add, SIGNAL (released()),this, SLOT (CourseStudentAdd()));
     connect(ui->work_add_button, SIGNAL (released()),this, SLOT (WorkAdd()));
+    connect(ui->upload_add_button, SIGNAL (released()),this, SLOT (UploadAdd()));
 
     connect(ui->teacher_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(TeacherDoubleClicked(QTableWidgetItem*)));
     connect(ui->student_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(StudentDoubleClicked(QTableWidgetItem*)));
@@ -45,6 +49,7 @@ AdminUI::AdminUI(QWidget *parent) :
     connect(ui->teacher_table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(TeacherIdSelected(QTableWidgetItem*)));
     connect(ui->student_table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(StudentIdSelected(QTableWidgetItem*)));
     connect(ui->course_table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(CourseIdSelected(QTableWidgetItem*)));
+    connect(ui->work_table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(WorkIdSelected(QTableWidgetItem*)));
 
 }
 
@@ -57,6 +62,7 @@ void AdminUI::show()
     CourseQuery();
     CourseStudentQuery();
     WorkQuery();
+    UploadQuery();
 }
 
 void AdminUI::closeEvent(QCloseEvent * event)
@@ -89,6 +95,7 @@ void AdminUI::StudentIdSelected(QTableWidgetItem *item)
     ui->course_student_sid_input->setText(id);
 
     CourseStudentQuerySid(id.toLocal8Bit().toStdString());
+    UploadQueryBySid(id.toLocal8Bit().toStdString());
 }
 
 void AdminUI::TeacherIdSelected(QTableWidgetItem *item)
@@ -97,6 +104,12 @@ void AdminUI::TeacherIdSelected(QTableWidgetItem *item)
     ui->course_tid_input->setText(id);
 
     CourseQueryTid(id.toLocal8Bit().toStdString());
+}
+void AdminUI::WorkIdSelected(QTableWidgetItem *item)
+{
+    QString id = ui->work_table->item(item->row(),0)->text();
+
+    UploadQueryByWid(id.toLocal8Bit().toStdString());
 }
 
 
@@ -365,3 +378,83 @@ void AdminUI::WorkDoubleClicked(QTableWidgetItem *item)
     edt->init(id);
     edt->show();
 }
+
+/* Upload refresh and edit */
+
+void AdminUI::UploadAdd()
+{
+    upload_edit *edt = new upload_edit(this);
+    connect(edt,SIGNAL(uploadChanged()),this,SLOT(UploadQuery()));
+    edt->init();
+    edt->show();
+}
+
+void AdminUI::UploadQuery()
+{
+    vector<Upload> ts=UploadDao::findAllUpload();
+    //printf("length: %d\n",ts.size());
+    QStringList header;
+    header<<tr("UploadId")<<tr("StudentId")<<tr("WorkId")<<tr("Score");
+    ui->upload_table->setColumnCount(header.size());
+    ui->upload_table->setHorizontalHeaderLabels(header);
+    ui->upload_table->setRowCount((int)ts.size());
+    ui->upload_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    for(int i=0;i<ts.size();++i)
+    {
+        Upload & m = ts[i];
+        ui->upload_table->setItem(i,0,new QTableWidgetItem(QString::fromLocal8Bit(m.getId().c_str())));
+        ui->upload_table->setItem(i,1,new QTableWidgetItem(QString::fromLocal8Bit(m.getSid().c_str())));
+        ui->upload_table->setItem(i,2,new QTableWidgetItem(QString::fromLocal8Bit(m.getWid().c_str())));
+        ui->upload_table->setItem(i,3,new QTableWidgetItem(QString::number(m.getScore())));
+    }
+}
+void AdminUI::UploadQueryByWid(string &wid)
+{
+    vector<Upload> ts=UploadDao::findUploadByWid(wid);
+    //printf("length: %d\n",ts.size());
+    QStringList header;
+    header<<tr("UploadId")<<tr("StudentId")<<tr("StudentName")<<tr("WorkId")<<tr("Score");
+    ui->upload_table->setColumnCount(header.size());
+    ui->upload_table->setHorizontalHeaderLabels(header);
+    ui->upload_table->setRowCount((int)ts.size());
+    ui->upload_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    for(int i=0;i<ts.size();++i)
+    {
+        Upload & m = ts[i];
+        ui->upload_table->setItem(i,0,new QTableWidgetItem(QString::fromLocal8Bit(m.getId().c_str())));
+        ui->upload_table->setItem(i,1,new QTableWidgetItem(QString::fromLocal8Bit(m.getSid().c_str())));
+        ui->upload_table->setItem(i,2,new QTableWidgetItem(QString::fromLocal8Bit(StudentDao::findStudentBySid(m.getSid()).getName().c_str())));
+        ui->upload_table->setItem(i,3,new QTableWidgetItem(QString::fromLocal8Bit(m.getWid().c_str())));
+        ui->upload_table->setItem(i,4,new QTableWidgetItem(QString::number(m.getScore())));
+    }
+}
+void AdminUI::UploadQueryBySid(string &sid)
+{
+    vector<Upload> ts=UploadDao::findUploadBySid(sid);
+    //printf("length: %d\n",ts.size());
+    QStringList header;
+    header<<tr("UploadId")<<tr("StudentId")<<tr("CourseId")<<tr("WorkId")<<tr("Score");
+    ui->upload_table->setColumnCount(header.size());
+    ui->upload_table->setHorizontalHeaderLabels(header);
+    ui->upload_table->setRowCount((int)ts.size());
+    ui->upload_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    for(int i=0;i<ts.size();++i)
+    {
+        Upload & m = ts[i];
+        ui->upload_table->setItem(i,0,new QTableWidgetItem(QString::fromLocal8Bit(m.getId().c_str())));
+        ui->upload_table->setItem(i,1,new QTableWidgetItem(QString::fromLocal8Bit(m.getSid().c_str())));
+        ui->upload_table->setItem(i,2,new QTableWidgetItem(QString::fromLocal8Bit(WorkDao::findWorkByWid(m.getWid()).getCourseId().c_str())));
+        ui->upload_table->setItem(i,3,new QTableWidgetItem(QString::fromLocal8Bit(m.getWid().c_str())));
+        ui->upload_table->setItem(i,4,new QTableWidgetItem(QString::number(m.getScore())));
+    }
+}
+
+void AdminUI::UploadDoubleClicked(QTableWidgetItem *item)
+{
+    upload_edit *edt = new upload_edit(this);
+    connect(edt,SIGNAL(uploadChanged()),this,SLOT(UploadQuery()));
+    string id = ui->work_table->item(item->row(),0)->text().toLocal8Bit().toStdString();
+    edt->init(id);
+    edt->show();
+}
+
