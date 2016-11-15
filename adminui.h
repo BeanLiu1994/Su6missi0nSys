@@ -15,6 +15,8 @@ class AdminUI : public QMainWindow
 public:
     explicit AdminUI(QWidget *parent = 0);
     ~AdminUI();
+signals:
+    void WindowClosed(void);
 
 public slots:
     void show();
@@ -29,7 +31,9 @@ public slots:
     void CourseStudentQuerySid(string &sid);
     void CourseStudentQueryCid(string &cid);
     void CourseStudentAdd();
+    void WorkAdd();
     void WorkQuery();
+    void WorkQueryByCid(string &cid);
 private slots:
     void TeacherDoubleClicked(QTableWidgetItem *item);
     void StudentDoubleClicked(QTableWidgetItem *item);

@@ -107,6 +107,34 @@ vector<string> WorkDao::findTimesByCid (const string&cid,string tableName)
 	}
 	return v;
 }
+vector<Work> WorkDao::findWorkByCidOnly(const string& cid,string tableName)
+{
+    string sql="select * from "+tableName+" where cid='"+cid+"';";
+    pRecordset=dBUtil->getRecordSet(sql.c_str());
+    vector<Work> v;
+    Work w;
+    while(!pRecordset->adoEOF)
+    {
+        string id=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wid"));
+        string cid=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("cid"));
+        string wtime=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wtime"));
+        string wcontent=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wcontent"));
+        string wanswer=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wanswer"));
+        string wdeadtime=(LPSTR)(LPCSTR)_bstr_t(pRecordset->GetCollect("wdeadtime"));
+
+        w.setId(id);
+        w.setCourseId(cid);
+        w.setTime(wtime);
+        w.setContent(wcontent);
+        w.setAnswer(wanswer);
+        w.setDate(wdeadtime);
+        v.push_back(w);
+        //cout<<c.toString()<<endl;
+        pRecordset->MoveNext();
+
+    }
+    return v;
+}
 bool WorkDao::updateRecord(Work& w,string tableName)
 {
     deleteRecord(w.getId());

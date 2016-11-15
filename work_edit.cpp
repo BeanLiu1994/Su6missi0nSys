@@ -7,10 +7,14 @@ work_edit::work_edit(QWidget *parent) :
 {
     ui->setupUi(this);
     if(parent!=nullptr)
-        connect(parent,SIGNAL(closeEvent()),this,SLOT(close()));
+        connect(parent,SIGNAL(WindowClosed()),this,SLOT(close()));
 
     connect(ui->work_add_button,SIGNAL(released()),this,SLOT(WorkAdd()));
     connect(ui->work_delete_button,SIGNAL(released()),this,SLOT(WorkDelete()));
+}
+void work_edit::init()
+{
+    ui->wid->setReadOnly(false);
 }
 void work_edit::init(string& _wid)
 {
@@ -43,6 +47,7 @@ work_edit::~work_edit()
 void work_edit::WorkAdd()
 {
     Work w;
+    wid=ui->wid->text().toLocal8Bit().toStdString();
     w.setContent(ui->wcontent->toPlainText().toLocal8Bit().toStdString());
     w.setAnswer(ui->wanswer->toPlainText().toLocal8Bit().toStdString());
 
@@ -55,8 +60,10 @@ void work_edit::WorkAdd()
         WorkDao::insertRecord(w);
     else
         WorkDao::updateRecord(w);
+    emit workChanged();
 }
 void work_edit::WorkDelete()
 {
      WorkDao::deleteRecord(wid);
+     emit workChanged();
 }

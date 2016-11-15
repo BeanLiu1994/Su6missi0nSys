@@ -34,6 +34,7 @@ AdminUI::AdminUI(QWidget *parent) :
     connect(ui->student_add, SIGNAL (released()),this, SLOT (StudentAdd()));
     connect(ui->course_add, SIGNAL (released()),this, SLOT (CourseAdd()));
     connect(ui->course_student_add, SIGNAL (released()),this, SLOT (CourseStudentAdd()));
+    connect(ui->work_add_button, SIGNAL (released()),this, SLOT (WorkAdd()));
 
     connect(ui->teacher_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(TeacherDoubleClicked(QTableWidgetItem*)));
     connect(ui->student_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(StudentDoubleClicked(QTableWidgetItem*)));
@@ -60,6 +61,7 @@ void AdminUI::show()
 
 void AdminUI::closeEvent(QCloseEvent * event)
 {
+    emit WindowClosed();
     LoginUi::GetCurrent()->ExitFromSubDialog();
 }
 
@@ -78,6 +80,7 @@ void AdminUI::CourseIdSelected(QTableWidgetItem *item)
     ui->course_student_cid_input->setText(id);
 
     CourseStudentQueryCid(id.toLocal8Bit().toStdString());
+    WorkQueryByCid(id.toLocal8Bit().toStdString());
 }
 
 void AdminUI::StudentIdSelected(QTableWidgetItem *item)
@@ -326,11 +329,38 @@ void AdminUI::WorkQuery()
         ui->work_table->setItem(i,3,new QTableWidgetItem(QString::fromLocal8Bit(m.getDate().c_str())));
     }
 }
+void AdminUI::WorkQueryByCid(string &cid)
+{
+    vector<Work> ts=WorkDao::findWorkByCidOnly(cid);
+    //printf("length: %d\n",ts.size());
+    QStringList header;
+    header<<tr("Workid")<<tr("CourseId")<<tr("Time")<<tr("Deadline");
+    ui->work_table->setColumnCount(header.size());
+    ui->work_table->setHorizontalHeaderLabels(header);
+    ui->work_table->setRowCount((int)ts.size());
+    ui->work_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    for(int i=0;i<ts.size();++i)
+    {
+        Work & m = ts[i];
+        ui->work_table->setItem(i,0,new QTableWidgetItem(QString::fromLocal8Bit(m.getId().c_str())));
+        ui->work_table->setItem(i,1,new QTableWidgetItem(QString::fromLocal8Bit(m.getCourseId().c_str())));
+        ui->work_table->setItem(i,2,new QTableWidgetItem(QString::fromLocal8Bit(m.getTime().c_str())));
+        ui->work_table->setItem(i,3,new QTableWidgetItem(QString::fromLocal8Bit(m.getDate().c_str())));
+    }
+}
 
+void AdminUI::WorkAdd()
+{
+    work_edit *edt = new work_edit(this);
+    connect(edt,SIGNAL(workChanged()),this,SLOT(WorkQuery()));
+    edt->init();
+    edt->show();
+}
 
 void AdminUI::WorkDoubleClicked(QTableWidgetItem *item)
 {
     work_edit *edt = new work_edit(this);
+    connect(edt,SIGNAL(workChanged()),this,SLOT(WorkQuery()));
     string id = ui->work_table->item(item->row(),0)->text().toLocal8Bit().toStdString();
     edt->init(id);
     edt->show();

@@ -15,8 +15,11 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="wid">
-     <property name="text">
+    <widget class="QLineEdit" name="wid">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="placeholderText">
       <string>wid here</string>
      </property>
     </widget>
@@ -86,7 +89,7 @@
      <item>
       <widget class="QPushButton" name="work_add_button">
        <property name="text">
-        <string>+</string>
+        <string>add or update</string>
        </property>
       </widget>
      </item>

@@ -13,10 +13,14 @@ class work_edit : public QDialog
 
 public:
     explicit work_edit(QWidget *parent = 0);
+    void init();
     void init(string& wid);
     void init(string& cid,string& time);
     void init(Work w_in);// find by cid and time
     ~work_edit();
+
+signals:
+    void workChanged();
 
 private slots:
     void WorkAdd();

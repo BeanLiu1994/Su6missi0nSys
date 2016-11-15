@@ -27,7 +27,7 @@ public:
 	
 	//根据题目的课程号和批次返回该题目
     static Work findWorkByCid(const string& cid,const string&wtime,string tableName=WORK_TABLE_NAME);
-
+    static vector<Work> findWorkByCidOnly(const string& cid,string tableName=WORK_TABLE_NAME);
     //根据题目的Id返回该题目
     static Work findWorkByWid(const string& wid,string tableName=WORK_TABLE_NAME);
 

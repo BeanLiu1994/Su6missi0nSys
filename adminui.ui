@@ -249,6 +249,13 @@
      </layout>
     </item>
     <item>
+     <widget class="QLabel" name="info1">
+      <property name="text">
+       <string>默认添加的密码为&quot;123456&quot;  双击删除,如果不能删除说明外键限制不满足  表格中的项选择后可以进行筛选  表格中的项选择后可以进行自动填充</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <layout class="QVBoxLayout" name="verticalLayout_5">
       <item>
        <widget class="QLabel" name="label5">
@@ -269,18 +276,29 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="WorkRefresh">
-        <property name="text">
-         <string>RefreshWork</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QPushButton" name="work_add_button">
+          <property name="text">
+           <string>+</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="WorkRefresh">
+          <property name="text">
+           <string>RefreshWork</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
     <item>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="info2">
       <property name="text">
-       <string>默认添加的密码为&quot;123456&quot;  双击删除,如果不能删除说明外键限制不满足  表格中的项选择后可以进行筛选  表格中的项选择后可以进行自动填充</string>
+       <string>这里的表格双击为编辑 可以通过course表格选择进行筛选</string>
       </property>
      </widget>
     </item>
