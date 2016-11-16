@@ -15,6 +15,7 @@ changepwd::changepwd(QWidget *parent) :
     ui->lineEditNew->setEchoMode(QLineEdit::Password);
     ui->lineEditRpt->setEchoMode(QLineEdit::Password);
     connect(ui->pushButtonOK,SIGNAL(released()),this,SLOT(BtnOK()));
+    connect(ui->pushButtonCancel,SIGNAL(released()),this,SLOT(BtnCancel()));
 }
 
 changepwd::~changepwd()
@@ -25,7 +26,9 @@ void changepwd::init(QString Id,UserType type)
 {
     show();
     id=Id;
-    ui->Info->setText(QString::fromLocal8Bit("正在修改")+id+QString::fromLocal8Bit("的密码"));
+    QString temp=QString::fromLocal8Bit("正在修改")+id+QString::fromLocal8Bit("的密码");
+    ui->Info->setText(temp);
+    setWindowTitle(temp);
     tp=type;
 }
 
@@ -33,8 +36,6 @@ void changepwd::init(QString Id,UserType type)
 
 void changepwd::closeEvent(QCloseEvent * event)
 {
-    LoginUi::GetCurrent()->ExitFromSubDialog();
-    StudentUi::GetCurrent()->close();
 }
 void changepwd::BtnOK()
 {
@@ -87,6 +88,8 @@ void changepwd::BtnOK()
             }
 
             msg.setText("Pwd changed successfully!");
+            connect(&msg,SIGNAL(destroyed(QObject*)),StudentUi::GetCurrent(),SLOT(close()));
+            connect(&msg,SIGNAL(destroyed(QObject*)),LoginUi::GetCurrent(),SLOT(ExitFromSubDialog()));
             msg.exec();
             this->close();
         }
