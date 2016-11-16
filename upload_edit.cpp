@@ -60,7 +60,10 @@ void upload_edit::UploadAdd()
     if(UploadDao::findUpload(u.getWid(),u.getSid()).getId().empty())
         UploadDao::insertRecord(u);
     else
+    {
         UploadDao::updateAns(u,u.getContent());
+        UploadDao::updateScore(u,u.getScore());
+    }
     emit uploadChanged();
 }
 void upload_edit::UploadDelete()
