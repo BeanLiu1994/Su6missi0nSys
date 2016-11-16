@@ -82,18 +82,44 @@
        </widget>
       </item>
       <item>
-       <widget class="QTextEdit" name="textEditTask"/>
+       <widget class="QTextEdit" name="textEditTask">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QLabel" name="labelAnswer">
-        <property name="text">
-         <string>Answer</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <widget class="QLabel" name="labelAnswer">
+          <property name="text">
+           <string>Answer</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>评分:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="score">
+            <property name="text">
+             <string>score here</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="QTextEdit" name="textEditAnswer"/>

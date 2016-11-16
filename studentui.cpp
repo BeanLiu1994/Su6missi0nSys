@@ -11,6 +11,7 @@ StudentUi::StudentUi(QWidget *parent) :
 {
     Current=this;
     ui->setupUi(this);
+    ui->score->setText(QString(" "));
     connect(ui->comboBoxSub, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(onSelSub(const QString&)));
     connect(ui->comboBoxBat, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(onSelBat(const QString&)));
     connect(ui->pushButtonSelect,SIGNAL(released()),this,SLOT(BtnSelect()));
@@ -50,6 +51,7 @@ void StudentUi::closeEvent(QCloseEvent * event)
     ui->comboBoxBat->clear();
     ui->textEditAnswer->setText(QString(" "));
     ui->textEditTask->setText(QString(" "));
+    ui->score->setText(QString(" "));
 }
 
 void StudentUi::onSelSub(const QString& currentText)
@@ -113,7 +115,12 @@ void StudentUi::BtnSelect()
             QString answer = QString(QString::fromLocal8Bit(u1.getContent().c_str()));  // show the task
             ui->textEditAnswer->setText(answer);
 
-            msg.setText( QString(QString::fromLocal8Bit("You have submitted! Press Update to update it")));
+            if(u1.getScore()==-1)
+                ui->score->setText(QString::fromLocal8Bit("Î´´ò·Ö"));
+            else
+                ui->score->setText(QString::number(u1.getScore()));
+
+            msg.setText( QString(QString::fromLocal8Bit("You have submitted! You can update it")));
             msg.exec();
 
         }

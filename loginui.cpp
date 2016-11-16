@@ -15,7 +15,7 @@ LoginUi::LoginUi(QWidget *parent) :
 {
     Current=this;
     ui->setupUi(this);
-    setFixedSize(284,100);
+    //setFixedSize(284,100);
     QStringList Temp;
     Temp<<QString::fromLocal8Bit("学生")
        <<QString::fromLocal8Bit("教师")
