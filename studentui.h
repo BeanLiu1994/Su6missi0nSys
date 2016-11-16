@@ -15,9 +15,22 @@ public:
     explicit StudentUi(QWidget *parent = 0);
     ~StudentUi();
     void setId(QString Id);
-
+private slots:
+    void onSelSub(const QString& currentText);
+    void onSelBat(const QString& text);
+    void BtnSubmit();
+    void BtnChangePwd();
+    void BtnSelect();
+    void BtnUpdate();
+signals:
+    void WindowClosed();
 private:
     Ui::StudentUi *ui;
+    QString id;
+    vector<Course> v; //course
+
+    string currentwtime;
+    Work w;
 
 protected:
     void closeEvent(QCloseEvent*);

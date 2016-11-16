@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     studentui.cpp \
     teacherui.cpp \
     work_edit.cpp \
-    upload_edit.cpp
+    upload_edit.cpp \
+    changepwd.cpp
 
 HEADERS  += mainwindow.h \
     dao/CourseDao.h \
@@ -48,7 +49,8 @@ HEADERS  += mainwindow.h \
     headers.h \
     teacherui.h \
     work_edit.h \
-    upload_edit.h
+    upload_edit.h \
+    changepwd.h
 
 FORMS    += mainwindow.ui \
     loginui.ui \
@@ -56,4 +58,5 @@ FORMS    += mainwindow.ui \
     studentui.ui \
     teacherui.ui \
     work_edit.ui \
-    upload_edit.ui
+    upload_edit.ui \
+    changepwd.ui

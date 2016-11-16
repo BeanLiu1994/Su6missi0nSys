@@ -26,7 +26,7 @@ void upload_edit::init()
 void upload_edit::init(string& uid)
 {
     Upload u = UploadDao::findUploadByUid(uid);
-    cout<<uid<<endl;
+    //cout<<uid<<endl;
     init(u);
 }
 void upload_edit::init(string& wid,string& sid)

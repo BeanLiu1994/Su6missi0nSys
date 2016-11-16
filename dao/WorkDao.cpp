@@ -13,6 +13,11 @@ bool WorkDao::insertRecord( const Work& s,string tableName)
 	string sql="insert into "+tableName+"(wid,cid,wtime,wcontent,wanswer,wdeadtime) value('"+s.getId()+"','"+s.getCourseId()+"','"+s.getTime()+"','"+s.getContent()+"','"+s.getAnswer()+"','"+s.getDate()+"');";
 	return dBUtil->executeSQL(sql.c_str());
 }
+Work WorkDao::findWork(const string& cid,const string&wtime,string tableName)
+{
+    return findWorkByCid(cid,wtime);
+}
+
 Work WorkDao::findWorkByCid(const string& cid,const string&wtime,string tableName){
     string sql="select * from "+tableName+" where cid='"+cid+"' and wtime="+wtime+";";
 	pRecordset=dBUtil->getRecordSet(sql.c_str());

@@ -18,7 +18,7 @@ TeacherUi::~TeacherUi()
 
 void TeacherUi::setId(QString Id)
 {
-    QMainWindow::show();
+    show();
     ui->IdShow->setText(Id);
     setWindowTitle(QString::fromLocal8Bit("»¶Ó­,")+Id);
 }

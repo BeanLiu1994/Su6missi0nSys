@@ -365,29 +365,32 @@ void AdminUI::WorkQueryByCid(string &cid)
 
 void AdminUI::WorkAdd()
 {
-    work_edit *edt = new work_edit(this);
-    connect(edt,SIGNAL(workChanged()),this,SLOT(WorkQuery()));
-    edt->init();
-    edt->show();
+    work_edit edt(this);
+    connect(&edt,SIGNAL(workChanged()),this,SLOT(WorkQuery()));
+    edt.init();
+    edt.show();
+    edt.exec();
 }
 
 void AdminUI::WorkDoubleClicked(QTableWidgetItem *item)
 {
-    work_edit *edt = new work_edit(this);
-    connect(edt,SIGNAL(workChanged()),this,SLOT(WorkQuery()));
+    work_edit edt(this);
+    connect(&edt,SIGNAL(workChanged()),this,SLOT(WorkQuery()));
     string id = ui->work_table->item(item->row(),0)->text().toLocal8Bit().toStdString();
-    edt->init(id);
-    edt->show();
+    edt.init(id);
+    edt.show();
+    edt.exec();
 }
 
 /* Upload refresh and edit */
 
 void AdminUI::UploadAdd()
 {
-    upload_edit *edt = new upload_edit(this);
-    connect(edt,SIGNAL(uploadChanged()),this,SLOT(UploadQuery()));
-    edt->init();
-    edt->show();
+    upload_edit edt(this);
+    connect(&edt,SIGNAL(uploadChanged()),this,SLOT(UploadQuery()));
+    edt.init();
+    edt.show();
+    edt.exec();
 }
 
 void AdminUI::UploadQuery()
@@ -452,10 +455,11 @@ void AdminUI::UploadQueryBySid(string &sid)
 
 void AdminUI::UploadDoubleClicked(QTableWidgetItem *item)
 {
-    upload_edit *edt = new upload_edit(this);
-    connect(edt,SIGNAL(uploadChanged()),this,SLOT(UploadQuery()));
+    upload_edit edt(this);
+    connect(&edt,SIGNAL(uploadChanged()),this,SLOT(UploadQuery()));
     string id = ui->upload_table->item(item->row(),0)->text().toLocal8Bit().toStdString();
-    edt->init(id);
-    edt->show();
+    edt.init(id);
+    edt.show();
+    edt.exec();
 }
 
