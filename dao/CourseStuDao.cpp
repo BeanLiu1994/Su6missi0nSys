@@ -44,8 +44,8 @@ vector<Course> CourseStuDao::findCourseBySid(const string& sid,string tableName)
     }
     return v;
 }
-vector<Course> CourseStuDao::findCourseBySidQuick(const string& sid){
-    string sql="select * from course_stu sc,course c where sc.sid='"+sid+"' and sc.cid=c.cid;";
+vector<Course> CourseStuDao::findCourseBySidQuick(const string& sid,string tableName){
+    string sql="select * from "+tableName+" sc,course c where sc.sid='"+sid+"' and sc.cid=c.cid;";
     pRecordset=dBUtil->getRecordSet(sql.c_str());
     vector<Course> v;
     while(!pRecordset->adoEOF)
@@ -80,8 +80,8 @@ vector<Student> CourseStuDao::findStudentByCid(const string& cid,string tableNam
     }
     return v;
 }
-vector<Student> CourseStuDao::findStudentByCidQuick(const string& cid){
-    string sql="select * from course_stu sc,student s where sc.cid='"+cid+"' and sc.sid=s.sid;";
+vector<Student> CourseStuDao::findStudentByCidQuick(const string& cid,string tableName){
+    string sql="select * from "+tableName+" sc,student s where sc.cid='"+cid+"' and sc.sid=s.sid;";
     pRecordset=dBUtil->getRecordSet(sql.c_str());
     vector<Student> v;
     while(!pRecordset->adoEOF)

@@ -1,0 +1,20 @@
+﻿教师界面
+
+修改密码				使用changepwd类
+查看所教课程				用到CourseDao::findCourseByTid
+查看选择某课程的学生			用到CourseStuDao::findStudentByCidQuick
+查看自己所教的某课程的作业		用到WorkDao::findWorkByCidOnly
+查看某作业的所有学生提交内容		用到UploadDao::findUploadByWid
+给某学生的提交打分0->100		用到UploadDao::updateScore
+
+
+
+数据口见dao文件夹内的头文件
+
+changepwd用法
+{
+    changepwd win(this);
+    win.init(id,tStudent);
+    win.show();
+    win.exec();
+}

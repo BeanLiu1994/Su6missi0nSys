@@ -30,11 +30,11 @@ public:
 	//根据学生信息返回该生所选课程
 	static vector<Course> findCourseBySid(const Student& s,string tableName=COURSESTU_TABLE_NAME);
 	static vector<Course> findCourseBySid(const string& sid,string tableName=COURSESTU_TABLE_NAME);
-    static vector<Course> findCourseBySidQuick(const string& sid);
+    static vector<Course> findCourseBySidQuick(const string& sid,string tableName=COURSESTU_TABLE_NAME);
     //根据课程信息返回学生信息
 	static vector<Student> findStudentByCid(const Course& c,string tableName=COURSESTU_TABLE_NAME);
 	static vector<Student> findStudentByCid(const string& cid,string tableName=COURSESTU_TABLE_NAME);
-    static vector<Student> findStudentByCidQuick(const string& cid);
+    static vector<Student> findStudentByCidQuick(const string& cid,string tableName=COURSESTU_TABLE_NAME);
     //所有内容
 	static vector<CourseStu> findAllCourseStus(string tableName=COURSESTU_TABLE_NAME);
 };
