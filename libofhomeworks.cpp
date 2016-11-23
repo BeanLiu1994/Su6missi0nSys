@@ -188,14 +188,15 @@ void LibOfHomeworks::AddWorks()
     {
         return
                 QDate::fromString(QString::fromLocal8Bit(m1.getDate().c_str()),"yyyy/MM/dd")
-                >
+                <
                 QDate::fromString(QString::fromLocal8Bit(m2.getDate().c_str()),"yyyy/MM/dd");
     });
     decltype(works_to_be_added) works_error;
     for(int i=0;i<works_to_be_added.size();++i)
     {
         Work temp=works_to_be_added[i];
-        string cid=temp.getCourseId();
+        string cid=courses[ui->course_dest->currentIndex()].getId();
+        temp.setCourseId(cid);
         vector<string> vcwt= WorkDao::findTimesByCid(cid);
         int maxTime=0;
         for(auto& m:vcwt)
@@ -206,8 +207,8 @@ void LibOfHomeworks::AddWorks()
                 maxTime=tempTime;
             }
         }
+        cout<<maxTime<<endl;
         temp.setTime(QString::number(maxTime+1).toLocal8Bit().toStdString());
-        temp.setCourseId(courses[ui->course_dest->currentIndex()].getId());
 
         QMessageBox msg;
         msg.setText(tr("insert failed. maybe same id exists."));
