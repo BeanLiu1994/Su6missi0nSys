@@ -5,6 +5,7 @@
 #include "teacherui.h"
 #include "work_edit.h"
 #include "upload_edit.h"
+#include "libofhomeworks.h"
 #include <QApplication>
 #include <QTextCodec>
 #include<iostream>
@@ -32,7 +33,6 @@ int main(int argc, char *argv[])
 
     LoginUi l;
     l.show();
-
 
     return a.exec();
 }

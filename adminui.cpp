@@ -3,6 +3,7 @@
 #include "loginui.h"
 #include "work_edit.h"
 #include "upload_edit.h"
+#include "libofhomeworks.h"
 
 
 void SetTableWidgetStyle(QTableWidget* tbw)
@@ -25,6 +26,7 @@ AdminUI::AdminUI(QWidget *parent) :
     SetTableWidgetStyle(ui->course_student_table);
     SetTableWidgetStyle(ui->work_table);
     SetTableWidgetStyle(ui->upload_table);
+    connect(ui->WorkLibEntry,SIGNAL(released()),this,SLOT(WorkLibEnter()));
 
     connect(ui->TeacherRefresh, SIGNAL (released()),this, SLOT (TeacherQuery()));
     connect(ui->StudentRefresh, SIGNAL (released()),this, SLOT (StudentQuery()));
@@ -149,7 +151,7 @@ void AdminUI::TeacherQuery()
     vector<Teacher> ts=TeacherDao::findAllTeachers();
     QStringList header;
     header<<tr("Name")<<tr("Id");
-    ui->course_student_table->setColumnCount(header.size());
+    ui->teacher_table->setColumnCount(header.size());
     ui->teacher_table->setHorizontalHeaderLabels(header);
     ui->teacher_table->setRowCount((int)ts.size());
     ui->teacher_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -183,7 +185,7 @@ void AdminUI::StudentQuery()
     //printf("length: %d\n",ts.size());
     QStringList header;
     header<<tr("Name")<<tr("Id");
-    ui->course_student_table->setColumnCount(header.size());
+    ui->student_table->setColumnCount(header.size());
     ui->student_table->setHorizontalHeaderLabels(header);
     ui->student_table->setRowCount((int)ts.size());
     ui->student_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -217,7 +219,7 @@ void AdminUI::CourseQuery()
     //printf("length: %d\n",ts.size());
     QStringList header;
     header<<tr("Name")<<tr("Id")<<tr("TeacherId");
-    ui->course_student_table->setColumnCount(header.size());
+    ui->course_table->setColumnCount(header.size());
     ui->course_table->setHorizontalHeaderLabels(header);
     ui->course_table->setRowCount((int)ts.size());
     ui->course_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -235,7 +237,7 @@ void AdminUI::CourseQueryTid(string & tid)
     //printf("length: %d\n",ts.size());
     QStringList header;
     header<<tr("Name")<<tr("Id")<<tr("TeacherId");
-    ui->course_student_table->setColumnCount(header.size());
+    ui->course_table->setColumnCount(header.size());
     ui->course_table->setHorizontalHeaderLabels(header);
     ui->course_table->setRowCount((int)ts.size());
     ui->course_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -463,3 +465,10 @@ void AdminUI::UploadDoubleClicked(QTableWidgetItem *item)
     edt.exec();
 }
 
+void AdminUI::WorkLibEnter()
+{
+    LibOfHomeworks worklib(this);
+    connect(&worklib,SIGNAL(workChanged()),this,SLOT(WorkQuery()));
+    worklib.show();
+    worklib.exec();
+}

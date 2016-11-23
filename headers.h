@@ -29,5 +29,8 @@
 #include <iostream>
 using std::string;
 
+void SetTableWidgetStyle(QTableWidget* tbw);
+string AddYYYYMM_Back(string & str);
+string GetStrBeforeDash(string & str);
 
 #endif // HEADERS_H

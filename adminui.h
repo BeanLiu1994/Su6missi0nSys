@@ -38,6 +38,7 @@ public slots:
     void UploadQuery();
     void UploadQueryByWid(string &wid);
     void UploadQueryBySid(string &sid);
+    void WorkLibEnter();
 private slots:
     void TeacherDoubleClicked(QTableWidgetItem *item);
     void StudentDoubleClicked(QTableWidgetItem *item);

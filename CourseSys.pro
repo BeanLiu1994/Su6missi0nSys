@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     teacherui.cpp \
     work_edit.cpp \
     upload_edit.cpp \
-    changepwd.cpp
+    changepwd.cpp \
+    libofhomeworks.cpp
 
 HEADERS  += mainwindow.h \
     dao/CourseDao.h \
@@ -50,7 +51,8 @@ HEADERS  += mainwindow.h \
     teacherui.h \
     work_edit.h \
     upload_edit.h \
-    changepwd.h
+    changepwd.h \
+    libofhomeworks.h
 
 FORMS    += mainwindow.ui \
     loginui.ui \
@@ -59,4 +61,5 @@ FORMS    += mainwindow.ui \
     teacherui.ui \
     work_edit.ui \
     upload_edit.ui \
-    changepwd.ui
+    changepwd.ui \
+    libofhomeworks.ui
