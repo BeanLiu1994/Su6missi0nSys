@@ -7,7 +7,7 @@
 #define _DBUTIL_H_
 
 //导入msado15，并将EOF重命名为adoEOF
-#import "../lib/msado15.dll" no_namespace rename("EOF","adoEOF") rename("BOF","adoBOF")
+#import "./lib/msado15.dll" no_namespace rename("EOF","adoEOF") rename("BOF","adoBOF")
 class DBUtil
 { 
     private:
