@@ -23,6 +23,8 @@
 #include "entity/Upload.h"
 #include "dao/UploadDao.h"
 #include "time.h"
+#include  <direct.h>
+#include  <stdio.h>
 using namespace std;
 
 
@@ -30,6 +32,17 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    QString qss;
+    QFile qssFile("ui.qss");
+    qssFile.open(QFile::ReadOnly);
+    if(qssFile.isOpen())
+    {
+        qss = QLatin1String(qssFile.readAll());
+        qApp->setStyleSheet(qss);
+        qssFile.close();
+
+    }
 
     LoginUi l;
     l.show();
