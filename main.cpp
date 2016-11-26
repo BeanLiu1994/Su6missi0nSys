@@ -30,7 +30,13 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
+    QFile styleSheet("ui.qss");
+    if (!styleSheet.open(QIODevice::ReadOnly))
+    {
+        qWarning("Can't open the style sheet file.");
+        return -1;
+    }
+    qApp->setStyleSheet(styleSheet.readAll());
     LoginUi l;
     l.show();
 
