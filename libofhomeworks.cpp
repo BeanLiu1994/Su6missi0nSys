@@ -11,6 +11,12 @@ string GetStrBeforeDash(string & str)
     return str.substr(0,str.find_first_of('#'));
 }
 
+void LibOfHomeworks::SetTid(string _Tid)
+{
+    Tid=_Tid;
+    getCourses();
+    SelectedWorksShow();
+}
 
 LibOfHomeworks::LibOfHomeworks(QWidget *parent) :
     QDialog(parent),
@@ -33,10 +39,12 @@ LibOfHomeworks::LibOfHomeworks(QWidget *parent) :
     connect(ui->SaveWorks,SIGNAL(released()),this,SLOT(AddWorks()));
     connect(ui->Exit,SIGNAL(released()),this,SLOT(close()));
 
+    ui->dateset->setDate(QDate::currentDate());
+
+
     getCourses();
     SelectedWorksShow();
 
-    ui->dateset->setDate(QDate::currentDate());
 }
 
 LibOfHomeworks::~LibOfHomeworks()
@@ -47,7 +55,9 @@ LibOfHomeworks::~LibOfHomeworks()
 void LibOfHomeworks::CourseSelected()
 {
     int ind=ui->course_select->currentIndex();
-    if(ind==0)
+    if(ind==-1)
+        return;
+    else if(ind==0)
         getWorks();
     else
         getWorks(courses[ind-1].getId());
@@ -55,7 +65,10 @@ void LibOfHomeworks::CourseSelected()
 
 void LibOfHomeworks::getCourses()
 {
-    courses=CourseDao::findAllCourses();
+    if(!Tid.empty())
+        courses=CourseDao::findCourseByTid(Tid);
+    else
+        courses=CourseDao::findAllCourses();
     QVector<QString> content;
     for(auto& m:courses)
     {
@@ -66,6 +79,7 @@ void LibOfHomeworks::getCourses()
     content.push_front(tr("All"));
     ui->course_select->clear();
     ui->course_select->addItems(QStringList::fromVector(content));
+    ui->course_select->setCurrentIndex(-1);
     ui->course_select->setCurrentIndex(0);
 }
 
@@ -73,7 +87,12 @@ void LibOfHomeworks::getWorks(string& cid)
 {
     if(cid.empty())
     {
-        works_on_show=WorkDao::findAllWorks();
+        works_on_show.clear();
+        for(auto &m:courses)
+        {
+            vector<Work> b=WorkDao::findWorkByCidOnly(m.getId());
+            works_on_show.insert(std::end(works_on_show), std::begin(b), std::end(b));
+        }
     }
     else
     {
@@ -85,7 +104,7 @@ void LibOfHomeworks::getWorks(string& cid)
     ui->work_table->setHorizontalHeaderLabels(header);
     ui->work_table->setRowCount((int)works_on_show.size());
     ui->work_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->work_table->setColumnWidth(0,20);
+    ui->work_table->setColumnWidth(0,40);
     for(int i=0;i<works_on_show.size();++i)
     {
         Work & m = works_on_show[i];
@@ -125,7 +144,7 @@ void LibOfHomeworks::SelectedWorksShow()
     ui->selected_table->setHorizontalHeaderLabels(header);
     ui->selected_table->setRowCount((int)works_to_be_added.size());
     ui->selected_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->selected_table->setColumnWidth(0,20);
+    ui->selected_table->setColumnWidth(0,40);
     for(int i=0;i<works_to_be_added.size();++i)
     {
         Work & m = works_to_be_added[i];

@@ -16,6 +16,9 @@ changepwd::changepwd(QWidget *parent) :
     ui->lineEditRpt->setEchoMode(QLineEdit::Password);
     connect(ui->pushButtonOK,SIGNAL(released()),this,SLOT(BtnOK()));
     connect(ui->pushButtonCancel,SIGNAL(released()),this,SLOT(BtnCancel()));
+
+
+    connect(this,SIGNAL(destroyed(QObject*)),parent,SLOT(close()));
 }
 
 changepwd::~changepwd()
@@ -88,8 +91,7 @@ void changepwd::BtnOK()
             }
 
             msg.setText("Pwd changed successfully!");
-            connect(&msg,SIGNAL(destroyed(QObject*)),StudentUi::GetCurrent(),SLOT(close()));
-            connect(&msg,SIGNAL(destroyed(QObject*)),LoginUi::GetCurrent(),SLOT(ExitFromSubDialog()));
+            connect(&msg,SIGNAL(destroyed(QObject*)),this,SLOT(close()));
             msg.exec();
             this->close();
         }

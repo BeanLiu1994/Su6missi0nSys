@@ -16,9 +16,27 @@ public:
     ~TeacherUi();
     void setId(QString Id);
 
+public slots:
+    void CourseQueryTid();
+    void ShowStudent(vector<Student> stu=vector<Student>());
+    void SelectStudent();
+    void FillStudent();
+    void FillHomework();
+    void ChangePasswd();
+    void WorkLibEnter();
+    void AddWorkEnter();
+
+signals:
+    void WindowClosed();
+
 private:
     Ui::TeacherUi *ui;
-
+    QString Id;
+    vector<Course> courses;
+    vector<Work> works;
+    vector<Upload> uploads;
+    vector<Student> students;
+    //bool eventFilter(QObject *watched, QEvent *event);
 protected:
     void closeEvent(QCloseEvent*);
 

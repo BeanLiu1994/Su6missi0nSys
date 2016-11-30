@@ -26,6 +26,7 @@ public slots:
     void UpdateDeadtime();
     void onHeaderClicked_2(int);
     void AddWorks();
+    void SetTid(string Tid);
 signals:
     void workChanged();
 
@@ -35,6 +36,7 @@ private:
     vector<Work> works_on_show;
     vector<Work> works_to_be_added;
     QButtonGroup radiobuttons;
+    string Tid;
     bool CheckWid(string&, vector<Work>&);
 };
 

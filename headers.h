@@ -24,7 +24,10 @@
 #include "dao/CourseStuDao.h"
 #include "dao/UploadDao.h"
 #include "propertymaker.h"
-
+#include "changepwd.h"
+#include "libofhomeworks.h"
+#include "work_edit.h"
+#include "upload_edit.h"
 
 #include <iostream>
 using std::string;

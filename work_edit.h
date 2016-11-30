@@ -15,7 +15,7 @@ public:
     explicit work_edit(QWidget *parent = 0);
     void init();
     void init(string& wid);
-    void init(string& cid,string& time);
+    void init(Course& c);
     void init(Work w_in);// find by cid and time
     ~work_edit();
 

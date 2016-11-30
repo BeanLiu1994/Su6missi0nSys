@@ -12,6 +12,7 @@ work_edit::work_edit(QWidget *parent) :
     connect(ui->work_add_button,SIGNAL(released()),this,SLOT(WorkAdd()));
     connect(ui->work_delete_button,SIGNAL(released()),this,SLOT(WorkDelete()));
 }
+
 void work_edit::init()
 {
     ui->wid->setReadOnly(false);
@@ -23,11 +24,37 @@ void work_edit::init(string& _wid)
     Work w_in = WorkDao::findWorkByWid(wid);
     init(w_in);
 }
-void work_edit::init(string& cid,string& time)
+void work_edit::init(Course& c)
 {
-    Work w_in = WorkDao::findWorkByCid(cid,time);
-    wid=w_in.getId();
-    init(w_in);
+    vector<Work> all = WorkDao::findAllWorks();
+    int count_m=0;
+    for(auto&m:all)
+    {
+        string id = GetStrBeforeDash(m.getId());
+        int count=QString::fromLocal8Bit(id.substr(1).c_str()).toInt();
+        if(count_m<count)
+            count_m=count;
+    }
+
+    all = WorkDao::findWorkByCidOnly(c.getId());
+    int time_m=0;
+    for(auto&m:all)
+    {
+        string id = m.getTime();
+        int count=QString::fromLocal8Bit(id.c_str()).toInt();
+        if(time_m<count)
+            time_m=count;
+    }
+
+    ui->wid->setReadOnly(true);
+    ui->wtime->setReadOnly(true);
+    ui->cid->setReadOnly(true);
+    Work w;
+    w.setId("w"+QString::number(count_m+1).toLocal8Bit().toStdString());
+    w.setCourseId(c.getId());
+    w.setTime(QString::number(time_m+1).toLocal8Bit().toStdString());
+    w.setDate(QDate::currentDate().toString("yyyy/MM/dd").toLocal8Bit().toStdString());
+    init(w);
 }
 void work_edit::init(Work w_in)
 {
