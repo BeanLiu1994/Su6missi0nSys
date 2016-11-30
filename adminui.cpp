@@ -4,6 +4,7 @@
 #include "work_edit.h"
 #include "upload_edit.h"
 #include "libofhomeworks.h"
+#include <QMessageBox>
 
 
 void SetTableWidgetStyle(QTableWidget* tbw)
@@ -367,9 +368,19 @@ void AdminUI::WorkQueryByCid(string &cid)
 
 void AdminUI::WorkAdd()
 {
+    int idx = ui->course_table->currentRow();
+    if(idx<0)
+    {
+        QMessageBox msg;
+        msg.setText(tr("Please select a course first."));
+        msg.exec();
+        return;
+    }
     work_edit edt(this);
     connect(&edt,SIGNAL(workChanged()),this,SLOT(WorkQuery()));
-    edt.init();
+    Course c;
+    c.setId(ui->course_table->item(idx,1)->text().toLocal8Bit().toStdString());
+    edt.init(c);
     edt.show();
     edt.exec();
 }
@@ -388,9 +399,28 @@ void AdminUI::WorkDoubleClicked(QTableWidgetItem *item)
 
 void AdminUI::UploadAdd()
 {
+    int idx = ui->work_table->currentRow();
+    if(idx<0)
+    {
+        QMessageBox msg;
+        msg.setText(tr("Please select a work first."));
+        msg.exec();
+        return;
+    }
+
+    int idx_s = ui->student_table->currentRow();
+    if(idx_s<0)
+    {
+        QMessageBox msg;
+        msg.setText(tr("Please select a student first."));
+        msg.exec();
+        return;
+    }
+
     upload_edit edt(this);
     connect(&edt,SIGNAL(uploadChanged()),this,SLOT(UploadQuery()));
-    edt.init();
+    edt.init(ui->work_table->item(idx,0)->text().toLocal8Bit().toStdString(),
+             ui->student_table->item(idx_s,1)->text().toLocal8Bit().toStdString());
     edt.show();
     edt.exec();
 }

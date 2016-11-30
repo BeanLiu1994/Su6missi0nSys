@@ -32,6 +32,12 @@ void upload_edit::init(string& uid)
 void upload_edit::init(string& wid,string& sid)
 {
     Upload u = UploadDao::findUpload(wid,sid);
+    if(u.getId().empty())
+    {
+        u.setWid(wid);
+        u.setSid(sid);
+        u.setId(wid+"_"+sid);
+    }
     init(u);
 }
 
