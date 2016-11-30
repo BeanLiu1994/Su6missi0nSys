@@ -18,7 +18,7 @@ TeacherUi::TeacherUi(QWidget *parent) :
     connect(ui->change_passwd,SIGNAL(released()),this,SLOT(ChangePasswd()));
     connect(ui->select_homework,SIGNAL(currentIndexChanged(int)),this,SLOT(FillHomework()));
     connect(ui->UseWorkLib,SIGNAL(released()),this,SLOT(WorkLibEnter()));
-    connect(ui->AddWork,SIGNAL(released()),this,SLOT(AddWorkEnter()));
+    connect(ui->doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(ScoreChanged(double)));
 }
 
 TeacherUi * TeacherUi::Current = nullptr;
@@ -163,5 +163,17 @@ void TeacherUi::AddWorkEnter()
     edt.init(courses[idx]);
     edt.show();
     edt.exec();
+}
+
+void TeacherUi::ScoreChanged(double value)
+{
+    int idx = ui->select_homework->currentIndex();
+    if(idx<0)return;
+    int idx_s = ui->student_table->currentRow();
+    if(idx_s<0)return;
+    ui->answer_text->setText(QString::fromLocal8Bit(works[idx].getAnswer().c_str()));
+    Upload u = UploadDao::findUpload(works[idx].getId(),students[idx_s].getId());
+    if(!u.getId().empty())
+        UploadDao::updateScore(u,value);
 }
 

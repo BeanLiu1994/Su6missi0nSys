@@ -25,6 +25,7 @@ public slots:
     void ChangePasswd();
     void WorkLibEnter();
     void AddWorkEnter();
+    void ScoreChanged(double);
 
 signals:
     void WindowClosed();
