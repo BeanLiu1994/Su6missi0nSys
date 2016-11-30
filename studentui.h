@@ -22,6 +22,7 @@ private slots:
     void BtnChangePwd();
     void BtnSelect();
     void BtnUpdate();
+    void tableItemChanged(QTableWidgetItem*,QTableWidgetItem*);
 signals:
     void WindowClosed();
 private:
@@ -31,6 +32,8 @@ private:
 
     string currentwtime;
     Work w;
+
+    void setTable();
 
 protected:
     void closeEvent(QCloseEvent*);

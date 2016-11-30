@@ -17,6 +17,7 @@ StudentUi::StudentUi(QWidget *parent) :
     connect(ui->pushButtonSelect,SIGNAL(released()),this,SLOT(BtnSelect()));
     connect(ui->pushButtonSubmit,SIGNAL(released()),this,SLOT(BtnSubmit()));
     connect(ui->pushButtonCpw,SIGNAL(released()),this,SLOT(BtnChangePwd()));
+    connect(ui->tableWidgetScan,SIGNAL(currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)),this,SLOT(tableItemChanged(QTableWidgetItem*,QTableWidgetItem*)));
 }
 
 StudentUi * StudentUi::Current = nullptr;
@@ -32,11 +33,15 @@ void StudentUi::setId(QString Id)
     ui->IdShow->setText(Id);
     setWindowTitle(QString::fromLocal8Bit("»¶Ó­,")+Id);
 
-    v = CourseStuDao::findCourseBySid(Id.toLocal8Bit().toStdString());   // add subjects
-    for(Course c:v)
-    {
-        ui->comboBoxSub->addItem(QWidget::tr(c.toString().c_str()));
-    }
+        v = CourseStuDao::findCourseBySid(Id.toLocal8Bit().toStdString());   // add subjects
+        for(Course c:v)
+        {
+            ui->comboBoxSub->addItem(QWidget::tr(c.toString().c_str()));
+        }
+
+    setTable();
+
+
 }
 
 void StudentUi::closeEvent(QCloseEvent * event)
@@ -76,7 +81,6 @@ void StudentUi::onSelBat(const QString& text)
 
 }
 
-
 void StudentUi::BtnChangePwd()
 {
     changepwd win(this);
@@ -84,10 +88,6 @@ void StudentUi::BtnChangePwd()
     win.show();
     win.exec();
 }
-
-
-
-
 
 void StudentUi::BtnSelect()
 {
@@ -99,7 +99,7 @@ void StudentUi::BtnSelect()
 
     string time1 = QDate::currentDate().toString("yyyy-MM-dd").toLocal8Bit().toStdString();
     string time2 = w.getDate();
-    if(time1>time2)
+    if(time1>time2) //for debug
     {
         msg.setText( QString(QString::fromLocal8Bit("Job submission has expired!")));
         msg.exec();
@@ -133,6 +133,8 @@ void StudentUi::BtnSelect()
 
 
     }
+
+
 
 }
 
@@ -187,3 +189,61 @@ void StudentUi::BtnUpdate()
         msg.exec();
     }
 }
+
+void StudentUi::tableItemChanged(QTableWidgetItem*,QTableWidgetItem*)
+{
+
+
+}
+
+void StudentUi::setTable()
+{
+    QString sId = this->id;
+     unsigned int row = 0,col = 0;
+   // vector<Course> course = CourseStuDao::findCourseBySid(sId.toLocal8Bit().toStdString());   // add subjects
+    for(Course &c:v)
+    {
+        //ui->comboBoxSub->addItem(QWidget::tr(c.toString().c_str()));
+        string courseId = c.getId();
+        vector<string> batch=WorkDao::findTimesByCid(courseId);
+        for(string& b:batch)
+        {
+
+            Work work  = WorkDao::findWorkByCid(courseId,b);
+
+            QDate time1 = QDate::currentDate();
+            QDate time2 = QDate::fromString(QString::fromLocal8Bit(work.getDate().c_str()),tr("yyyy/MM/dd"));
+            if(time1 > time2)
+            {
+
+                ui->tableWidgetScan->setItem(row,col,new QTableWidgetItem(c.toString().c_str()));  // add subjects
+                ui->tableWidgetScan->setItem(row,col+1,new QTableWidgetItem(b.c_str()));
+                ui->tableWidgetScan->setItem(row,col+2,new QTableWidgetItem(time2.toString("yyyy/MM/dd")));
+                row++;
+
+            }
+
+        }
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

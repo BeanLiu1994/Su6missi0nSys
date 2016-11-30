@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>761</width>
-    <height>737</height>
+    <width>860</width>
+    <height>734</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -20,9 +26,15 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
            <widget class="QLabel" name="IdShow">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>此处显示Id</string>
             </property>
@@ -38,7 +50,7 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QLabel" name="labelSubject">
             <property name="text">
@@ -52,7 +64,7 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QLabel" name="labelBatch">
             <property name="text">
@@ -84,7 +96,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QTableWidget" name="tableWidget">
+         <widget class="QTableWidget" name="tableWidgetScan">
           <property name="rowCount">
            <number>10</number>
           </property>
@@ -149,14 +161,24 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="labelAnswer">
+        <property name="text">
+         <string>Answer</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTextEdit" name="textEditAnswer"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonSubmit">
+        <property name="text">
+         <string>Submit</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <item>
-         <widget class="QLabel" name="labelAnswer">
-          <property name="text">
-           <string>Answer</string>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
@@ -173,16 +195,6 @@
         </item>
        </layout>
       </item>
-      <item>
-       <widget class="QTextEdit" name="textEditAnswer"/>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonSubmit">
-        <property name="text">
-         <string>Submit</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
    </layout>
@@ -192,8 +204,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>761</width>
-     <height>41</height>
+     <width>860</width>
+     <height>23</height>
     </rect>
    </property>
   </widget>
