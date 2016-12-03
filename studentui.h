@@ -22,7 +22,7 @@ private slots:
     void BtnChangePwd();
     void BtnSelect();
     void BtnUpdate();
-    void tableItemChanged(QTableWidgetItem*,QTableWidgetItem*);
+    void tableDoubleClicked( QTableWidgetItem *rowItem);
 signals:
     void WindowClosed();
 private:
@@ -30,10 +30,12 @@ private:
     QString id;
     vector<Course> v; //course
 
-    string currentwtime;
-    Work w;
+    string courseId;   //current course
+    string currentwtime;  // current batch
+    Work w;   //current work
 
     void setTable();
+    void showTaskAns();
 
 protected:
     void closeEvent(QCloseEvent*);

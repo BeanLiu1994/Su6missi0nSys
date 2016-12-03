@@ -23,7 +23,7 @@ changepwd::changepwd(QWidget *parent) :
 
 changepwd::~changepwd()
 {
-    delete ui;
+   delete ui;
 }
 void changepwd::init(QString Id,UserType type)
 {
@@ -101,5 +101,6 @@ void changepwd::BtnOK()
 
 void changepwd::BtnCancel()
 {
+
     this->close();
 }

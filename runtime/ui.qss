@@ -1,5 +1,5 @@
 QMainWindow{
-background-color:rgb(200, 200, 1);
+background-color:rgb(255, 255, 1);
 }
 
 
@@ -77,13 +77,13 @@ border-style:solid;
 
 background-color:#3d3d3d;
 color:#fff;
-border-radius:7px;
+border-radius:15px;
 }
 QPushButton:hover{
 color:#ccc;
 	background-color: qlineargradient(spread:pad, x1:0.517, y1:0, x2:0.517, y2:1, stop:0 rgba(45, 45, 45, 255), stop:0.505682 rgba(45, 45, 45, 255), stop:1 rgba(29, 29, 29, 255));
 	border-color:#2d89ef;
-border-width:2px;
+border-width:1px;
 }
 
 QPushButton:pressed{
