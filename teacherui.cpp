@@ -18,6 +18,7 @@ TeacherUi::TeacherUi(QWidget *parent) :
     connect(ui->change_passwd,SIGNAL(released()),this,SLOT(ChangePasswd()));
     connect(ui->select_homework,SIGNAL(currentIndexChanged(int)),this,SLOT(FillHomework()));
     connect(ui->UseWorkLib,SIGNAL(released()),this,SLOT(WorkLibEnter()));
+    connect(ui->AddWork,SIGNAL(released()),this,SLOT(AddWorkEnter()));
     connect(ui->doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(ScoreChanged(double)));
 }
 

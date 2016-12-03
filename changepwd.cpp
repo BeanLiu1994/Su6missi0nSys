@@ -17,8 +17,6 @@ changepwd::changepwd(QWidget *parent) :
     connect(ui->pushButtonOK,SIGNAL(released()),this,SLOT(BtnOK()));
     connect(ui->pushButtonCancel,SIGNAL(released()),this,SLOT(BtnCancel()));
 
-
-    connect(this,SIGNAL(destroyed(QObject*)),parent,SLOT(close()));
 }
 
 changepwd::~changepwd()
@@ -92,8 +90,8 @@ void changepwd::BtnOK()
 
             msg.setText("Pwd changed successfully!");
             connect(&msg,SIGNAL(destroyed(QObject*)),this,SLOT(close()));
+            connect(this,SIGNAL(destroyed(QObject*)),parent(),SLOT(close()));
             msg.exec();
-            this->close();
         }
     }
 
