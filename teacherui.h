@@ -25,6 +25,7 @@ public slots:
     void ChangePasswd();
     void WorkLibEnter();
     void AddWorkEnter();
+    void ShowAllScores();
     void ScoreChanged(double);
 
 signals:
