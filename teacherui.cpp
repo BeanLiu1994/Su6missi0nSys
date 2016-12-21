@@ -15,8 +15,9 @@ TeacherUi::TeacherUi(QWidget *parent) :
     connect(ui->course_table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(ShowStudent()));
     connect(ui->course_table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(FillHomework()));
     connect(ui->student_table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(SelectStudent()));
+    connect(ui->student_table,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(ShowAllScores()));
     connect(ui->change_passwd,SIGNAL(released()),this,SLOT(ChangePasswd()));
-    connect(ui->select_homework,SIGNAL(currentIndexChanged(int)),this,SLOT(FillHomework()));
+    connect(ui->select_homework,SIGNAL(currentIndexChanged(int)),this,SLOT(ShowStudent()));
     connect(ui->UseWorkLib,SIGNAL(released()),this,SLOT(WorkLibEnter()));
     connect(ui->AddWork,SIGNAL(released()),this,SLOT(AddWorkEnter()));
     connect(ui->doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(ScoreChanged(double)));
@@ -95,24 +96,42 @@ void TeacherUi::ShowStudent(vector<Student> stu)
         students=stu;
     }
     QStringList header;
-    header<<tr("Name")<<tr("Id");
+    header<<tr("Name")<<tr("Id")<<tr("Score");
     ui->student_table->setColumnCount(header.size());
     ui->student_table->setHorizontalHeaderLabels(header);
-    ui->student_table->setRowCount((int)stu.size());
+    ui->student_table->setRowCount((int)stu.size()+1);
     ui->student_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    double mean=0;int StuNum=0;
     for(int i=0;i<stu.size();++i)
     {
         Student & m = stu[i];
         ui->student_table->setItem(i,0,new QTableWidgetItem(QString::fromLocal8Bit(m.getName().c_str())));
         ui->student_table->setItem(i,1,new QTableWidgetItem(QString::fromLocal8Bit(m.getId().c_str())));
-        //ui->course_table->setItem(i,2,new QTableWidgetItem(QString::fromLocal8Bit(m.getTeacherId().c_str())));
+
+        int idx = ui->select_homework->currentIndex();
+        if(idx<0)continue;
+        Upload u = UploadDao::findUpload(works[idx].getId(),m.getId());
+        QString score;
+        if(u.getScore()==-1)
+            score=tr("No Data");
+        else
+        {
+            score = QString::number(u.getScore());
+            ++StuNum;
+            mean+=u.getScore();
+        }
+        ui->student_table->setItem(i,2,new QTableWidgetItem(score));
     }
+    if(StuNum!=0)
+        mean/=StuNum;
+    ui->student_table->setItem(stu.size(),2,new QTableWidgetItem(tr("mean: ")+QString::number(mean)));
 }
 
 void TeacherUi::FillHomework() {
     int idx= ui->course_table->currentRow();
     if(idx<0)return;
     works = WorkDao::findWorkByCidOnly(courses[idx].getId());
+    ui->select_homework->clear();
     for (int i = 0; i < works.size(); ++i) {
         ui->select_homework->addItem(QString::fromLocal8Bit(works[i].getId().c_str()));
     }
@@ -126,9 +145,9 @@ void TeacherUi::FillStudent() {
 }
 void TeacherUi::SelectStudent() {
     int idx = ui->select_homework->currentIndex();
-    if(idx<0)return;
+    if(idx<0||idx>=works.size())return;
     int idx_s = ui->student_table->currentRow();
-    if(idx_s<0)return;
+    if(idx_s<0||idx_s>=students.size())return;
     ui->answer_text->setText(QString::fromLocal8Bit(works[idx].getAnswer().c_str()));
     Upload u = UploadDao::findUpload(works[idx].getId(),students[idx_s].getId());
     ui->doubleSpinBox->setEnabled(!u.getId().empty());
@@ -178,3 +197,57 @@ void TeacherUi::ScoreChanged(double value)
         UploadDao::updateScore(u,value);
 }
 
+void TeacherUi::ShowAllScores()
+{
+    int idx_c = ui->course_table->currentRow();
+    if(idx_c<0||idx_c>=courses.size())return;
+    Course CurrentCourse=courses[idx_c];
+    int idx_s = ui->student_table->currentRow();
+    if(idx_s<0||idx_s>=students.size())return;
+    Student CurrentStu=students[idx_s];
+    QDialog CurrentStuWindow;
+    CurrentStuWindow.setWindowTitle(tr("Scores of ")+QString::fromLocal8Bit(CurrentStu.getName().c_str()));
+    QTableWidget* p=new QTableWidget();
+    SetTableWidgetStyle(p);
+    QStringList header;
+    header<<tr("WorkId")<<tr("Score");
+    p->setColumnCount(header.size());
+    p->setHorizontalHeaderLabels(header);
+    p->setRowCount((int)works.size());
+    p->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    double mean=0;int WorkNum=0;
+    for(int i=0;i<works.size();++i)
+    {
+        Work & m = works[i];
+        p->setItem(i,0,new QTableWidgetItem(QString::fromLocal8Bit(m.getId().c_str())));
+
+        Upload u = UploadDao::findUpload(m.getId(),CurrentStu.getId());
+        QString score;
+        if(u.getScore()==-1)
+        {
+            ++WorkNum;
+            score=tr("No Data");
+        }
+        else
+        {
+            score = QString::number(u.getScore());
+            ++WorkNum;
+            mean+=u.getScore();
+        }
+        p->setItem(i,1,new QTableWidgetItem(score));
+    }
+    if(WorkNum!=0)
+        mean/=WorkNum;
+    QLabel * info=new QLabel();
+    info->setText(tr("Course  --  Name : [")+QString::fromLocal8Bit(CurrentCourse.getName().c_str())+"] ID : ["+QString::fromLocal8Bit(CurrentCourse.getId().c_str())+tr("]\n")+
+                  tr("Student --  Name : [")+QString::fromLocal8Bit(CurrentStu.getName().c_str())+"] ID : ["+QString::fromLocal8Bit(CurrentStu.getId().c_str())+tr("]\n")+
+                  tr("Average Score    : ")+QString::number(mean)
+                  );
+
+
+    QVBoxLayout *mainLayout = new QVBoxLayout();
+    mainLayout->addWidget(info);
+    mainLayout->addWidget(p);
+    CurrentStuWindow.setLayout(mainLayout);
+    CurrentStuWindow.exec();
+}
