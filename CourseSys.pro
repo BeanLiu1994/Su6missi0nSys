@@ -63,3 +63,7 @@ FORMS    += mainwindow.ui \
     upload_edit.ui \
     changepwd.ui \
     libofhomeworks.ui
+
+DISTFILES += \
+    ui.qss \
+    sc.qss

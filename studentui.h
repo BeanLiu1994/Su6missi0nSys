@@ -22,6 +22,7 @@ private slots:
     void BtnChangePwd();
     void BtnSelect();
     void BtnUpdate();
+    void BtnSave();
     void tableDoubleClicked( QTableWidgetItem *rowItem);
 signals:
     void WindowClosed();

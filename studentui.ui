@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>894</width>
-    <height>716</height>
+    <width>763</width>
+    <height>669</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,118 +20,118 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
+   <layout class="QHBoxLayout" name="horizontalLayout_6">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QLabel" name="IdShow">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>此处显示Id</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonCpw">
-              <property name="text">
-               <string>ChangePassword</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
-             <widget class="QLabel" name="labelSubject">
-              <property name="text">
-               <string>课程</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBoxSub"/>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <widget class="QLabel" name="labelBatch">
-              <property name="text">
-               <string>批次</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBoxBat"/>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButtonSelect">
+           <widget class="QLabel" name="IdShow">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
-             <string>Select</string>
+             <string>此处显示Id</string>
             </property>
            </widget>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-             <widget class="QLabel" name="labelScan">
-              <property name="text">
-               <string>No_Submit_Task_Scan</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QTableWidget" name="tableWidgetScan">
-              <property name="rowCount">
-               <number>0</number>
-              </property>
-              <property name="columnCount">
-               <number>3</number>
-              </property>
-              <column>
-               <property name="text">
-                <string>Course</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Batch</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Deadline</string>
-               </property>
-              </column>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QPushButton" name="pushButtonCpw">
+            <property name="text">
+             <string>ChangePassword</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLabel" name="labelSubject">
+            <property name="text">
+             <string>课程</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBoxSub"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="labelBatch">
+            <property name="text">
+             <string>批次</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBoxBat"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonSelect">
+          <property name="text">
+           <string>Select</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QLabel" name="labelScan">
+            <property name="text">
+             <string>No_Submit_Task_Scan</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTableWidget" name="tableWidgetScan">
+            <property name="rowCount">
+             <number>0</number>
+            </property>
+            <property name="columnCount">
+             <number>3</number>
+            </property>
+            <column>
+             <property name="text">
+              <string>Course</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Batch</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Deadline</string>
+             </property>
+            </column>
+           </widget>
           </item>
          </layout>
         </item>
        </layout>
       </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QLabel" name="labelTask">
+         <widget class="QLabel" name="labelAnswer">
           <property name="text">
-           <string>Task</string>
+           <string>Answer</string>
           </property>
          </widget>
         </item>
@@ -143,9 +143,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="labelAnswer">
+         <widget class="QLabel" name="labelTask">
           <property name="text">
-           <string>Answer</string>
+           <string>Task</string>
           </property>
          </widget>
         </item>
@@ -153,25 +153,18 @@
          <widget class="QTextEdit" name="textEditAnswer"/>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButtonSubmit">
-          <property name="text">
-           <string>Submit</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
-           <widget class="QLabel" name="label">
+           <widget class="QPushButton" name="pushButtonSave">
             <property name="text">
-             <string>评分:</string>
+             <string>Save</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="score">
+           <widget class="QPushButton" name="pushButtonSubmit">
             <property name="text">
-             <string>score here</string>
+             <string>Submit</string>
             </property>
            </widget>
           </item>
@@ -179,17 +172,36 @@
         </item>
        </layout>
       </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>评分:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="score">
+          <property name="text">
+           <string>score here</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
      </layout>
     </item>
    </layout>
    <zorder></zorder>
+   <zorder>verticalLayoutWidget_2</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>894</width>
+     <width>763</width>
      <height>23</height>
     </rect>
    </property>

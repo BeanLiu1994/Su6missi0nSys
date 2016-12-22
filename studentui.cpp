@@ -12,6 +12,7 @@ StudentUi::StudentUi(QWidget *parent) :
     Current=this;
     ui->setupUi(this);
     ui->score->setText(QString(" "));
+    connect(ui->pushButtonSave,SIGNAL(released()),this,SLOT(BtnSave()));
     connect(ui->comboBoxSub, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(onSelSub(const QString&)));
     connect(ui->comboBoxBat, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(onSelBat(const QString&)));
     connect(ui->pushButtonSelect,SIGNAL(released()),this,SLOT(BtnSelect()));
@@ -45,6 +46,14 @@ void StudentUi::setId(QString Id)
 
 
 
+
+}
+
+void StudentUi::BtnSave()
+{
+    QMessageBox msg;
+    msg.setText( QString(QString::fromLocal8Bit("Save successfully!")));
+    msg.exec();
 
 }
 
